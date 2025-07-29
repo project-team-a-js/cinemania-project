@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #F8F8F8;
+  --grey: #B7B7B7;
+  --orange: #F87719;
+}
+
+:root[data-theme="light"] {
+  /* Light Theme */
+  --bg-primary: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #282828;
+  --grey: #595959;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.container {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 768px;
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1280px;
+    padding: 0 32px;
+  }
+}
