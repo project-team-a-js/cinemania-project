@@ -1,2 +1,1 @@
 # cinemania-project
-s
