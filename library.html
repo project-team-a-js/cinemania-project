@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-C89IecHP.css">
+    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-DEi62LHa.css">
   </head>
   <body>
-    <div class="mobile-menu">
+    <script src="../js/header.js" defer></script>
+<div class="mobile-menu">
   <div class="box">
-    <object data="./1.svg" type=""></object>
+    <object data="../img/logo.svg" type=""></object>
 
     <ul class="nav-bar">
       <li><a href="">home</a></li>
@@ -20,16 +21,19 @@
 </div>
 <nav>
   <div class="logo-box">
-    <object data="./1.svg" type=""></object>
-    <h1 class="logo-title">Cinemania</h1>
+    <a href="#"><object data="../img/logo.svg" type=""></object></a>
+    <a href="#"><h1 class="logo-title">Cinemania</h1></a>
   </div>
   <ul class="nav-bar">
     <li><a href="">home</a></li>
     <li><a href="">catalog</a></li>
     <li><a href="">my library</a></li>
   </ul>
-  <button class="menu-button">MENU</button>
-  <p>switch</p>
+  <button class="menu-button">menu</button>
+  <label class="toggle-switch">
+    <input type="checkbox" checked />
+    <span class="switch-box circle"></span>
+  </label>
 </nav>
 
 <header>
@@ -46,6 +50,21 @@
     <main>
         
     </main>
-    
+    <footer class="footer-container">
+    <p class="info-p">&copy;
+        2025 | All Rights Reserved |</p>
+    <div class="footer-info">
+        <p class="info-p">Developed with <span>&hearts;
+            </span>by <a href="#" class="footer-link" id="footer-link">GoIT Students</a></p>
+    </div>
+    <div class="modal">
+        <div class="modal-content"><span class="modal-close-btn">&times;
+            </span>
+            <p class="footer-developers info-p"><b>Developed by:<br></b>A.Furkan Toy<br>Aykut Şahinbaş<br>Burak
+                Ezer<br>Çağla Karabudak Akın<br>Emre Ayvaz<br>Erdem İzcikılınç<br>İlker Şelimen<br>Mehmet Öndüç<br>Özgür
+                Korkmaz<br>Umay Ece Mantar </p>
+        </div>
+    </div>
+</footer>
   </body>
 </html>
