@@ -1,0 +1,196 @@
+.upcoming-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.upcoming-h2 {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.upcoming-movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movieImage {
+    width: 100%;
+    max-width: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.upcoming-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 22px;
+    padding-right: 18px;
+}
+
+.upcoming-title {
+    margin: 20px 0;
+}
+
+.upcoming-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.info-tablet-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-p {
+    margin: 0;
+}
+
+.info-span {
+    display: flex;
+    width: 150px;
+}
+
+.upcoming-about {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.addLibrary {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 140px;
+    height: 38px;
+    border-radius: 74px;
+    padding-inline: 0;
+    border: none;
+}
+
+@media screen and (max-width: 320px) {
+    .movieImage {
+        aspect-ratio: 280 / 402;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .movieImage {
+        aspect-ratio: 280 / 402;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .upcoming-container {
+        width: 100%;
+        max-width: 768px;
+    }
+
+    .upcoming-h2 {
+        padding-left: 34px;
+    }
+
+    .movieImage {
+        max-width: 704px;
+        height: 400px;
+        margin: 0;
+        padding-left: 32px;
+    }
+
+    .upcoming-info {
+        padding-left: 32px;
+    }
+
+    .upcoming-title {
+        margin-top: 32px;
+        margin-bottom: 24px;
+    }
+
+    .upcoming-info-details {
+        flex-direction: row;
+    }
+
+    .info-tablet-details {
+        width: 350px;
+    }
+
+    .info-detail .info-p {
+        width: 150px;
+    }
+
+    .info-span {
+        width: 200px;
+    }
+
+    .addLibrary {
+        margin-top: 20px;
+        margin-bottom: 77px;
+        width: 155px;
+        height: 40px;
+    }
+
+
+}
+
+@media screen and (min-width: 1280px) {
+    .upcoming-container {
+        width: 100%;
+        max-width: 1280px;
+    }
+
+    .upcoming-h2 {
+        padding-left: 32px;
+        margin-bottom: 28px;
+    }
+
+    .upcoming-movie {
+        padding: 0 32px;
+    }
+
+    .upcoming-movie-container {
+        display: flex;
+        gap: 16px;
+    }
+
+    .movieImage {
+        max-width: 805px;
+        aspect-ratio: 16 / 9;
+    }
+
+    .upcoming-info {
+        width: 405px;
+    }
+
+    .upcoming-title {
+        margin-top: 0;
+        margin-bottom: 28px;
+    }
+
+    .upcoming-info-details {
+        gap: 12px;
+    }
+
+    .info-tablet-details {
+        gap: 12px;
+    }
+
+    .addLibrary {
+        margin-top: 20px;
+        margin-bottom: 105px;
+        width: 155px;
+        height: 40px;
+    }
+
+
+}
