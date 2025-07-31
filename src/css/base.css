@@ -1,16 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ffffff;
+  background-color: #111111;
 }
 
 :root {
   /* Dark Theme (Default) */
   --bg-primary: #111111;
   --text-primary: #ffffff;
-  --text-secondary: #F8F8F8;
-  --grey: #B7B7B7;
-  --orange: #F87719;
+  --text-secondary: #f8f8f8;
+  --grey: #b7b7b7;
+  --orange: #f87719;
 }
 
 :root[data-theme="light"] {
@@ -21,9 +24,27 @@
   --grey: #595959;
 }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 12px;
+}
+
+h5 {
+  font-size: 10px;
 }
 
 .container {
@@ -33,16 +54,52 @@ body {
   padding: 0 16px;
 }
 
-@media (min-width: 576px) {
-  .container {
-    max-width: 768px;
-    padding: 0 24px;
+@media (min-width: 768px) {
+  h1 {
+    font-size: 52px;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  h5 {
+    font-size: 12px;
   }
 }
 
-@media (min-width: 992px) {
-  .container {
-    max-width: 1280px;
-    padding: 0 32px;
+@media (min-width: 1280px) {
+  h1 {
+    font-size: 64px;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  h5 {
+    font-size: 14px;
   }
 }
