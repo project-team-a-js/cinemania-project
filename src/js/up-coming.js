@@ -96,11 +96,13 @@ function displayMovie(movie) {
     : "Unknown Release Date";
   const voteAverage = movie.vote_average
     ? movie.vote_average.toFixed(1)
-    : "N/A";
+    : "";
   const voteCount = movie.vote_count
     ? movie.vote_count.toLocaleString()
-    : "N/A";
+    : "";
   const genres = getGenresNames(movie.genre_ids);
+
+  const movieTitle = movie.title.toUpperCase();
 
     upcomingMovie.innerHTML = `
     <div class="upcoming-movie-container">
@@ -110,22 +112,26 @@ function displayMovie(movie) {
             class="movieImage ${imageClass}"
             alt="${movie.title} Poster Görseli"/>
         <div class="upcoming-info">
-            <p class="upcoming-title">${movie.title}</p>
+            <p class="upcoming-title">${movieTitle}</p>
             <div class="upcoming-info-details">
                 <div class="info-tablet-details">
                     <div class="info-detail">
                         <p class="info-p">Release Date</p>
-                        <span class="info-span">${releaseDate}</span>
+                        <span class="info-span info-color">${releaseDate}</span>
                     </div>
                     <div class="info-detail">
                         <p class="info-p">Vote / Votes</p>
-                        <span class="info-span">${voteAverage} / ${voteCount}</span>
+                        <div class="info-votes-container">
+                          <span class="info-span info-votes">${voteAverage}</span>
+                          <p> / </p>
+                          <span class="info-span info-votes">${voteCount}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="info-tablet-details">
                     <div class="info-detail">
                         <p class="info-p">Popularity</p>
-                        <span class="info-span">${movie.popularity}</span>
+                        <span class="info-span">${movie.popularity.toFixed(2)}</span>
                     </div>
                     <div class="info-detail">
                         <p class="info-p">Genres</p>
@@ -135,7 +141,7 @@ function displayMovie(movie) {
                 
             </div>
             <div class="upcoming-about">
-                <p class="info-p">ABOUT</p>
+                <p class="info-p info-about">ABOUT</p>
                 <p class="info-p">${movie.overview}</p>
             </div>
             <button class="addLibrary" data-id="${
