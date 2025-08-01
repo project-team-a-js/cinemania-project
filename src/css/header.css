@@ -46,8 +46,8 @@ a {
 }
 
 header {
-  background: linear-gradient(hsla(0, 0%, 7%, 1), hsla(0, 0%, 7%, 0.4)),
-    url("https://sm.ign.com/t/ign_tr/news/s/stranger-t/stranger-things-creators-say-netflix-series-will-end-with-se_pkm4.1280.jpg")
+  background: 
+    url("../img/bg.png")
       no-repeat center center / cover;
   width: 100%;
   height: 380px;
