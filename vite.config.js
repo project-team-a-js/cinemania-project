@@ -6,7 +6,6 @@ import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
-  // Development için base path '/', production için '/cinemania-project/'
   const base = command === 'serve' ? '/' : '/cinemania-project/';
   
   return {
@@ -18,7 +17,11 @@ export default defineConfig(({ command }) => {
     build: {
       sourcemap: true,
       rollupOptions: {
-        input: glob.sync('./src/*.html'),
+        input: {
+          main: './src/index.html',
+          catalog: './src/catalog.html',
+          library: './src/library.html'
+        },
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
