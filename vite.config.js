@@ -6,6 +6,7 @@ import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
+  // Development için base path '/', production için '/cinemania-project/'
   const base = command === 'serve' ? '/' : '/cinemania-project/';
   
   return {
