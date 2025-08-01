@@ -20,13 +20,6 @@
   --transition-func: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.light {
-  --bg-primary: #ffffff;
-  --text-primary: #111111;
-  --text-secondary: #282828;
-  --grey: #595959;
-}
-
 :root[data-theme="light"] {
   /* Light Theme */
   --bg-primary: #ffffff;
