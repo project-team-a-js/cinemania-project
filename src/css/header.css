@@ -1,15 +1,15 @@
 button {
   font-size: 12px;
-  color: #111111;
+  color: var(--black);
 }
 
 .nav-bar {
   display: none;
-  color: violet;
+  color: var(--black);
 }
 
 .mobile-menu {
-  background-color: #f8f8f8;
+  background-color: var(--bg-primary);
   width: 204px;
   height: 438px;
   position: absolute;
@@ -18,8 +18,12 @@ button {
   display: none;
 }
 
+.mobile-menu ul a {
+  color: var(--text-primary);
+}
+
 .mobile-menu ul a:hover {
-  color: #f87719;
+  color: var(--orange);
 }
 
 .mobile-menu ul {
@@ -37,7 +41,7 @@ button {
 }
 
 a {
-  color: #595959;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -52,7 +56,7 @@ header {
 }
 
 nav {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   display: flex;
   position: relative;
   width: 100%;
@@ -66,6 +70,7 @@ nav {
   font-size: 32px;
   width: 199px;
   position: absolute;
+  color: var(--white-smoke);
   top: 40px;
   left: 20px;
 }
@@ -76,7 +81,7 @@ nav {
   line-height: 100%;
   letter-spacing: 0%;
   text-align: center;
-  color: #070606;
+  color: var(--text-primary);
   display: none;
 }
 
@@ -92,6 +97,7 @@ nav {
   width: 166px;
   position: absolute;
   height: 80px;
+  color: var(--white-smoke);
   top: 192px;
   left: 20px;
 }
@@ -99,11 +105,11 @@ nav {
 .button {
   width: 110px;
   height: 38px;
-  color: #111111;
+  color: var(--black);
   border-radius: 74px;
   position: absolute;
   font-weight: 500;
-  background: linear-gradient(#ffc226, #f84119);
+  background: var(--liner);
   border: none;
   top: 310px;
   left: 20px;
@@ -116,13 +122,14 @@ nav {
 }
 
 .button:hover {
-  color: #f87719;
-  background: #ffffff;
-  border: #f87719;
+  color: var(--orange);
+  background: var(--white-smoke);
+  border: var(--orange);
 }
 
 .menu-button {
   background-color: transparent;
+  color: var(--text-primary);
   border: none;
   font-weight: 500;
   cursor: pointer;
@@ -135,7 +142,7 @@ nav {
 }
 
 .menu-button:hover {
-  color: #f87719;
+  color: var(--orange);
 }
 
 @media screen and (min-width: 720px) {
@@ -145,7 +152,7 @@ nav {
 
   .nav-bar {
     display: flex;
-    color: #595959;
+    color: var(--grey);
     list-style: none;
     gap: 30px;
     text-transform: uppercase;
@@ -157,7 +164,7 @@ nav {
   }
 
   .nav-bar a:hover {
-    color: #f87719;
+    color: var(--orange);
   }
 
   .button {
@@ -216,65 +223,28 @@ nav {
   }
 }
 
-.toggle-switch {
+.toggle {
   position: relative;
-  display: inline-block;
-  width: 45px;
   height: 24px;
-}
-
-.toggle-switch input {
-  display: none;
-}
-
-.switch-box {
-  position: absolute;
+  width: 60px;
+  border-radius: 194px;
+  background-color: var(--orange);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(#ffc226, #f84119);
-  -moz-transition: 0.4s;
-  -o-transition: 0.4s;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
 }
 
-.switch-box:before {
-  position: absolute;
+.toggle::before {
   content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -moz-transition: 0.4s;
-  -o-transition: 0.4s;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .switch-box {
-  background: linear-gradient(#ffc226, #f84119);
-}
-
-input:checked + .switch-box:before {
-  -moz-transform: translateX(20px);
-  -ms-transform: translateX(20px);
-  -o-transform: translateX(20px);
-  -webkit-transform: translateX(20px);
-  transform: translateX(20px);
-}
-
-.switch-box.circle {
-  -moz-border-radius: 34px;
-  -webkit-border-radius: 34px;
-  border-radius: 34px;
-}
-
-.switch-box.circle:before {
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  background-color: var(--white-smoke);
   border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle.active::before {
+  left: calc(100% - 18px - 3px);
 }
