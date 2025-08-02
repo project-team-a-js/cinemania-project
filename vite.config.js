@@ -1,4 +1,3 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 import { glob } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
@@ -6,11 +5,10 @@ import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
-  // Development için base path '/', production için '/cinemania-project/'
-  const base = command === 'serve' ? '/' : '/cinemania-project/';
-  
   return {
-    base,
+    // Dev için '/', Production için '/cinemania-project/'
+    base: command === 'serve' ? '/' : '/cinemania-project/',
+    
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
@@ -18,7 +16,11 @@ export default defineConfig(({ command }) => {
     build: {
       sourcemap: true,
       rollupOptions: {
-        input: glob.sync('./src/*.html'),
+        input: {
+          main: './src/index.html',
+          catalog: './src/catalog.html',
+          library: './src/library.html'
+        },
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {

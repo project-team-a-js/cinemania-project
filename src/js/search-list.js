@@ -1,108 +1,99 @@
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 
-const yearSelect = document.getElementById("year-select");
-const currentYear = new Date().getFullYear();
 const searchInput = document.getElementById("search-input");
 const clearBtn = document.getElementById("clear-btn");
 const movieList = document.getElementById("movie-list");
 const searchForm = document.getElementById("search-form");
 const pagination = document.getElementById("pagination");
+const yearSelect = document.getElementById("year-select");
 
-let totalPages = 24; // Toplam sayfa sayısı (örnek)
+let totalPages = 24;
 let currentPage = 1;
 
-// Yıl seçeneği doldur
-for (let y = currentYear; y >= 1900; y--) {
-  const opt = document.createElement("option");
-  opt.value = y;
-  opt.textContent = y;
-  yearSelect.appendChild(opt);
-}
-
-// Arama inputundaki değere göre çarpı butonunu göster/gizle
+// Çarpı butonu göster/gizle
 searchInput.addEventListener("input", () => {
   clearBtn.style.display = searchInput.value ? "inline" : "none";
 });
 
-// Çarpı butonuna basınca inputu temizle ve trend filmleri getir
+// Çarpı butonu temizleme
 clearBtn.addEventListener("click", () => {
   searchInput.value = "";
   clearBtn.style.display = "none";
   currentPage = 1;
-  fetchTrendingMovies();
-  renderPagination();
+  fetchAndRenderMovies();
 });
 
-// Sayfa yüklendiğinde trend filmleri getir
+// Yıl seçimi değişince sayfa 1 yap ve listeyi yenile
+yearSelect.addEventListener("change", () => {
+  currentPage = 1;
+});
+
+// Sayfa yüklendiğinde başlangıçta listeyi getir
 document.addEventListener("DOMContentLoaded", () => {
-  fetchTrendingMovies();
+  fetchAndRenderMovies();
   renderPagination();
 });
 
-// Trend filmleri API'den çek
-async function fetchTrendingMovies() {
-  try {
-    const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&page=${currentPage}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!data.results || data.results.length === 0) {
-      movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Trend film bulunamadı.</p>`;
-      totalPages = 1;
-    } else {
-      totalPages = data.total_pages > 24 ? 24 : data.total_pages; // Maks 24 sayfa göster
-      renderMovies(data.results);
+// API URL'si kurucu fonksiyon
+function buildApiUrl(query, page, year) {
+  if (query) {
+    // Arama API'si
+    const url = new URL("https://api.themoviedb.org/3/search/movie");
+    url.searchParams.append("api_key", API_KEY);
+    url.searchParams.append("query", query);
+    url.searchParams.append("page", page);
+    if (year) {
+      url.searchParams.append("primary_release_year", year);
     }
-  } catch (err) {
-    console.error("Trend filmler alınamadı:", err);
-    movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Trend filmleri alırken hata oluştu.</p>`;
+    return url.toString();
+  } else {
+    // Trend API'si
+    const url = new URL("https://api.themoviedb.org/3/discover/movie");
+    url.searchParams.append("api_key", API_KEY);
+    url.searchParams.append("sort_by", "popularity.desc");
+    url.searchParams.append("page", page);
+    if (year) {
+      url.searchParams.append("primary_release_year", year);
+    }
+    return url.toString();
   }
 }
 
-// Arama formu submit olunca
-searchForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
+// Film verisini çek ve render et
+async function fetchAndRenderMovies() {
   const query = searchInput.value.trim();
   const year = yearSelect.value;
 
-  if (!query && !year) {
-    currentPage = 1;
-    fetchTrendingMovies();
-    renderPagination();
-    return;
-  }
-
   try {
-    let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&page=${currentPage}`;
-
-    if (query) {
-      url += `&query=${encodeURIComponent(query)}`;
-    }
-
-    if (year) {
-      url += `&year=${year}`;
-    }
-
+    const url = buildApiUrl(query, currentPage, year);
     const response = await fetch(url);
     const data = await response.json();
 
     if (!data.results || data.results.length === 0) {
-      movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Hiçbir sonuç bulunamadı.</p>`;
+      movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Sonuç bulunamadı.</p>`;
       totalPages = 1;
-    } else {
-      totalPages = data.total_pages > 24 ? 24 : data.total_pages; // Maks 24 sayfa
-      renderMovies(data.results);
+      renderPagination();
+      return;
     }
-  } catch (err) {
-    console.error("Arama sırasında hata oluştu:", err);
-    movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Arama sırasında hata oluştu.</p>`;
-  }
 
-  renderPagination();
+    totalPages = data.total_pages > 24 ? 24 : data.total_pages;
+    renderMovies(data.results);
+    renderPagination();
+  } catch (err) {
+    console.error("Film verisi alınamadı:", err);
+    movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Film verisi alınırken hata oluştu.</p>`;
+    totalPages = 1;
+    renderPagination();
+  }
+}
+
+// Arama formu gönderildiğinde
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  currentPage = 1;
+  fetchAndRenderMovies();
 });
 
-// Film kartlarını render et
 function renderMovies(movies) {
   const gradientDefs = `
     <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
@@ -133,36 +124,33 @@ function renderMovies(movies) {
 
         const stars = Array(5)
           .fill(0)
-          .map((_, i) => {
-            return `
-      <svg class="star ${i < starsCount ? "filled" : ""}" viewBox="0 0 24 24" >
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-      `;
-          })
+          .map(
+            (_, i) => `
+            <svg class="star ${i < starsCount ? "filled" : ""}" viewBox="0 0 24 24" >
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>`
+          )
           .join("");
 
         return `
-      <div class="movie-card">
-        <img src="${imgSrc}" alt="${title}" />
-        <div class="movie-info">
-          <div class="movie-title">${title.toUpperCase()}</div>
-          <div class="movie-meta">${year}</div>
-        </div>
-        <div class="rating-stars">${stars}</div>
-      </div>
-    `;
+          <div class="movie-card">
+            <img src="${imgSrc}" alt="${title}" />
+            <div class="movie-info">
+              <div class="movie-title">${title.toUpperCase()}</div>
+              <div class="movie-meta">${year}</div>
+            </div>
+            <div class="rating-stars">${stars}</div>
+          </div>
+        `;
       })
       .join("");
 }
 
-// Pagination render fonksiyonu - senin istediğin dinamik sağ sayı ile
 function renderPagination() {
   pagination.innerHTML = "";
 
   const maxVisiblePages = 3;
 
-  // Geri ok <
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "<";
   prevBtn.classList.add("arrow-btn");
@@ -170,19 +158,17 @@ function renderPagination() {
   prevBtn.onclick = () => {
     if (currentPage > 1) {
       currentPage--;
-      onPageChange();
+      fetchAndRenderMovies();
     }
   };
   pagination.appendChild(prevBtn);
 
-  // Soldaki sayfa numarası = currentPage
+  // Sayfa aralığı ayarı
   let startPage = currentPage;
   let endPage = startPage + maxVisiblePages - 1;
 
-  // Dinamik sağdaki son sayfa = 24 + (currentPage - 1)
-  let dynamicLastPage = 24 + (currentPage - 1);
+  if (endPage > totalPages) endPage = totalPages;
 
-  // Sayfa butonları (3 tane)
   for (let i = startPage; i <= endPage; i++) {
     const pageBtn = document.createElement("button");
     pageBtn.textContent = i.toString().padStart(2, "0");
@@ -190,78 +176,36 @@ function renderPagination() {
     if (i === currentPage) pageBtn.classList.add("active");
     pageBtn.onclick = () => {
       currentPage = i;
-      onPageChange();
+      fetchAndRenderMovies();
     };
     pagination.appendChild(pageBtn);
   }
 
-  // ... göstergesi
-  const ellipsis = document.createElement("span");
-  ellipsis.textContent = "...";
-  ellipsis.classList.add("ellipsis");
-  pagination.appendChild(ellipsis);
+  if (endPage < totalPages) {
+    const ellipsis = document.createElement("span");
+    ellipsis.textContent = "...";
+    ellipsis.classList.add("ellipsis");
+    pagination.appendChild(ellipsis);
 
-  // Sağdaki son sayfa butonu (dinamik)
-  const lastPageBtn = document.createElement("button");
-  lastPageBtn.textContent = dynamicLastPage.toString().padStart(2, "0");
-  lastPageBtn.classList.add("page-btn");
-  lastPageBtn.onclick = () => {
-    currentPage = dynamicLastPage;
-    onPageChange();
-  };
-  pagination.appendChild(lastPageBtn);
+    const lastPageBtn = document.createElement("button");
+    lastPageBtn.textContent = totalPages.toString().padStart(2, "0");
+    lastPageBtn.classList.add("page-btn");
+    lastPageBtn.onclick = () => {
+      currentPage = totalPages;
+      fetchAndRenderMovies();
+    };
+    pagination.appendChild(lastPageBtn);
+  }
 
-  // İleri ok >
   const nextBtn = document.createElement("button");
   nextBtn.textContent = ">";
   nextBtn.classList.add("arrow-btn");
-  nextBtn.disabled = currentPage === dynamicLastPage;
+  nextBtn.disabled = currentPage === totalPages;
   nextBtn.onclick = () => {
-    if (currentPage < dynamicLastPage) {
+    if (currentPage < totalPages) {
       currentPage++;
-      onPageChange();
+      fetchAndRenderMovies();
     }
   };
   pagination.appendChild(nextBtn);
-}
-
-// Sayfa değişince çalışacak fonksiyon
-function onPageChange() {
-  // Eğer arama varsa arama yap, yoksa trend filmler
-  const query = searchInput.value.trim();
-  const year = yearSelect.value;
-
-  if (!query && !year) {
-    fetchTrendingMovies();
-  } else {
-    // Arama yap
-    (async () => {
-      try {
-        let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&page=${currentPage}`;
-
-        if (query) {
-          url += `&query=${encodeURIComponent(query)}`;
-        }
-
-        if (year) {
-          url += `&year=${year}`;
-        }
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.results || data.results.length === 0) {
-          movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">OOPS... We are very sorry! We don’t have any results matching your search.</p>`;
-          totalPages = 1;
-        } else {
-          totalPages = data.total_pages > 24 ? 24 : data.total_pages;
-          renderMovies(data.results);
-        }
-      } catch (err) {
-        console.error("OOPS...We are very sorry!We don’t have any results matching your search.", err);
-        movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">OOPS... We are very sorry! We don’t have any results matching your search.</p>`;
-      }
-      renderPagination();
-    })();
-  }
 }

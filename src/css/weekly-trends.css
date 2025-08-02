@@ -1,0 +1,162 @@
+.container-weekly {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 40px;
+}
+
+.container-weekly-trends {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 28px;
+}
+.weekly-title {
+  font-size: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 100%;
+  text-transform: uppercase;
+}
+.seeall {
+  font-size: Roboto;
+  font-weight: 500;
+  line-height: 100%;
+  color: #f87719;
+  font-size: 16px;
+
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+#weekly-cards {
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.card-weekly {
+  height: 406px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: none;
+}
+.card-weekly-content {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 16px 16px;
+}
+.card-weekly-content h3 {
+  font-family: Roboto;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.card-weekly-content p {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #b7b7b7;
+}
+.star-weekly {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 86px;
+  height: 14px;
+  gap: 4px;
+}
+
+/* Tablet CSS */
+@media screen and (min-width: 768px) {
+  .container-weekly {
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-top: 52px;
+  }
+  .container-weekly-trends {
+    padding-bottom: 24px;
+  }
+  .weekly-title {
+    font-size: 24px;
+  }
+  .seeall {
+    font-size: 24px;
+  }
+  #weekly-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+  }
+  .card-weekly {
+    height: 325px;
+    width: 100%;
+  }
+  .card-weekly-content {
+    padding: 0 12px 12px;
+  }
+  .card-weekly-content h3 {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .card-weekly-content p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .star-weekly {
+    width: 66px;
+    height: 10px;
+    gap: 4px;
+  }
+}
+
+/* Dosktop CSS */
+@media screen and (min-width: 1280px) {
+  .container-weekly {
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-top: 80px;
+  }
+  .container-weekly-trends {
+    padding-bottom: 28px;
+  }
+  .weekly-title {
+    font-size: 28px;
+  }
+  .seeall {
+    font-size: 28px;
+  }
+  #weekly-cards {
+    gap: 15px;
+  }
+  .card-weekly {
+    height: 574px;
+    width: 100%;
+  }
+  .card-weekly-content {
+    padding: 0 20px 20px;
+  }
+  .card-weekly-content h3 {
+    font-size: 20px;
+    line-height: 100%;
+    margin-bottom: 10px;
+  }
+  .card-weekly-content p {
+    font-size: 20px;
+    line-height: 100%;
+  }
+  .star-weekly {
+    width: 106px;
+    height: 18px;
+  }
+}
