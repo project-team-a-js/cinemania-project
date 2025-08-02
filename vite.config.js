@@ -6,8 +6,8 @@ import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
   return {
-
-    base: '/cinemania-project/',
+    // Dev için '/', Production için '/cinemania-project/'
+    base: command === 'serve' ? '/' : '/cinemania-project/',
     
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
