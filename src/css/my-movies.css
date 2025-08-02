@@ -136,6 +136,7 @@ body {
 }
 
 .empty-message {
+    display: none;
     color: var(--white);
     font-weight: 400;
     font-size: 32px;
@@ -145,7 +146,7 @@ body {
    
 }
 .search-movie-btn {
-    display: flex;
+    display: none;
     background: linear-gradient(to right, hsl(13, 94%, 54%), hsl(42, 100%, 57%));
     color: var(--bg);
     border: none;
