@@ -66,10 +66,13 @@ nav {
   font-weight: 700;
   font-size: 32px;
   width: 199px;
+  height: 100px;
   position: absolute;
   color: var(--white-smoke);
   top: 40px;
   left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logo-title {
@@ -93,10 +96,12 @@ nav {
   font-weight: 400;
   width: 166px;
   position: absolute;
-  height: 80px;
+  height: 100px;
   color: var(--white-smoke);
   top: 192px;
   left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .button {
@@ -122,7 +127,7 @@ nav {
   background: transparent;
   border: 1px solid var(--white-smoke);
   color: var(--white-smoke);
-  top: 500px;
+  top: 310px;
   left: 154px;
 }
 
@@ -167,6 +172,11 @@ nav {
     height: 432px;
   }
 
+  iframe {
+    width: 854px;
+    height: 480px;
+  }
+
   .nav-bar {
     display: flex;
     color: var(--grey);
@@ -182,10 +192,6 @@ nav {
 
   .nav-bar a:hover {
     color: var(--orange);
-  }
-
-  .button {
-    top: 268px;
   }
 
   .menu {
@@ -227,7 +233,7 @@ nav {
     vertical-align: middle;
   }
 
-  .button {
+  .button, .button2 {
     top: 500px;
   }
 

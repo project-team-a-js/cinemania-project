@@ -67,7 +67,7 @@ const createTrailer = ({ key }) => {
 	<form method="dialog">
 		<button class="video-modal-close">Close</button>
 	</form>
-	<iframe width="854" height="480" src="https://www.youtube.com/embed/${key}">
+	<iframe src="https://www.youtube.com/embed/${key}">
 </iframe>
 </dialog>
     `;
