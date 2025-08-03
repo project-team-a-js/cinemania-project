@@ -7,6 +7,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 const upcomingMovie = document.querySelector(".upcoming-movie");
 
 let genresMap = new Map(); //key: ID, value: genre name
+let currentMovie = null; //resize için
 
 async function fetchGenres() {
   try {
@@ -55,24 +56,36 @@ function myLibraryButtonUpdate(button, movieID) {
 }
 
 function displayMovie(movie) {
+  if (!movie) { 
+    const noMovie = document.createElement(`<div>
+        <p>OOPS...
+          We are very sorry!
+          But we couldn’t find any movie.</p>
+      </div>`);
+    upcomingMovie.innerHTML = noMovie;
+    return;
+  }
+
+  currentMovie = movie; //Görüntülenen filmi saklamak için
+
   let imageUrl, srcset, sizes, imageClass;
 
   const windowWidth = window.innerWidth;
 
   if (windowWidth >= 1280 && movie.backdrop_path) {
     // DESKTOP için backdrop_path
-    imageUrl = `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`;
-    srcset = ` https://image.tmdb.org/t/p/w780${movie.backdrop_path} 780w,
-        https://image.tmdb.org/t/p/w1280${movie.backdrop_path} 1280w,
-        https://image.tmdb.org/t/p/original${movie.backdrop_path} 1920w
+    imageUrl = `${IMAGE_BASE_URL}w1280${movie.backdrop_path}`;
+    srcset = ` ${IMAGE_BASE_URL}w780${movie.backdrop_path} 780w,
+        ${IMAGE_BASE_URL}w1280${movie.backdrop_path} 1280w,
+        ${IMAGE_BASE_URL}original${movie.backdrop_path} 1920w
         `;
     sizes = `(min-width: 1280px) 805px`;
     imageClass = "movie-image-backdrop";
   } else if (windowWidth >= 768 && movie.backdrop_path) {
     // TABLET için backdrop_path (768px ile 1279px arası)
-    imageUrl = `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
-    srcset = ` https://image.tmdb.org/t/p/w300${movie.backdrop_path} 300w,
-        https://image.tmdb.org/t/p/w780${movie.backdrop_path} 780w
+    imageUrl = `${IMAGE_BASE_URL}w780${movie.backdrop_path}`;
+    srcset = ` ${IMAGE_BASE_URL}w300${movie.backdrop_path} 300w,
+        ${IMAGE_BASE_URL}w780${movie.backdrop_path} 780w
         `;
     sizes = `(min-width: 768px) 704px,
         (max-width: 1279px) 704px`;
@@ -80,11 +93,11 @@ function displayMovie(movie) {
   } else {
     // MOBİL için poster_path (320px ile 767px arası)
     imageUrl = movie.poster_path
-      ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
+      ? `${IMAGE_BASE_URL}w342${movie.poster_path}`
       : "https://via.placeholder.com/320x460?text=Görsel+Yok";
-    srcset = ` https: //image.tmdb.org/t/p/w185${movie.poster_path} 185w,
-        https://image.tmdb.org/t/p/w342${movie.poster_path} 342w,
-        https://image.tmdb.org/t/p/w500${movie.poster_path} 500w
+    srcset = ` ${IMAGE_BASE_URL}w185${movie.poster_path} 185w,
+        ${IMAGE_BASE_URL}w342${movie.poster_path} 342w,
+        ${IMAGE_BASE_URL}w500${movie.poster_path} 500w
         `;
     sizes = `(max-width: 320px) 280px,
         (max-width: 767px) 280px`;
@@ -131,7 +144,9 @@ function displayMovie(movie) {
                 <div class="info-tablet-details">
                     <div class="info-detail">
                         <p class="info-p">Popularity</p>
-                        <span class="info-span">${movie.popularity.toFixed(2)}</span>
+                        <span class="info-span">${movie.popularity.toFixed(
+                          2
+                        )}</span>
                     </div>
                     <div class="info-detail">
                         <p class="info-p">Genres</p>
@@ -228,4 +243,22 @@ function isMovieInLibrary(movieID) {
   return myLibrary.includes(movieID);
 }
 
+function debounce(func, delay) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), delay);
+  };
+}
+
+const handleResize = debounce(() => {
+  if (currentMovie) {
+    displayMovie(currentMovie); // Mevcut filmi tekrar göster
+  } else {
+      upcomingMovieContainer.innerHTML = "";
+    }
+}, 250);
+
 document.addEventListener("DOMContentLoaded", randomUpcomingMovie);
+window.addEventListener("resize", handleResize);

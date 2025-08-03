@@ -84,8 +84,8 @@
 }
 
 .info-votes{
-    background-color: var(--text-primary);
-    color: var(--bg-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -111,17 +111,23 @@
 .addLibrary {
     margin-top: 20px;
     margin-bottom: 40px;
-    width: 155px;
-    height: 38px;
+    padding: 12px 24px;
+    display: inline-block;
+    width: fit-content;
     border-radius: 74px;
-    padding-inline: 0;
     border: none;
-    color: #fff;
+    color: var(--bg-primary);
     background-color:var(--orange);
     font-size: 12px;
     font-weight: 500;
 }
 
+.addLibrary:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--orange);
+    transition: all var(--transition-dur) var(--transition-func);
+}
 
 @media screen and (max-width: 320px) {
     .movieImage {
@@ -191,7 +197,6 @@
     .addLibrary {
         margin-top: 20px;
         margin-bottom: 77px;
-        width: 165px;
         height: 40px;
         font-size: 14px;
     }
@@ -246,7 +251,6 @@
 
     .addLibrary {
         margin-top: 20px;
-        width: 155px;
         height: 40px;
     }
 
