@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <script type="module" crossorigin src="/cinemania-project/assets/vendor-CJ4cOYKs.js"></script>
-    <script type="module" crossorigin src="/cinemania-project/assets/styles-Bo4DVdGf.js"></script>
-    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-CtPIu4tI.css">
+    <script type="module" crossorigin src="/cinemania-project/assets/styles-DE11lBTz.js"></script>
+    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-BeZKyILk.css">
   </head>
   <body>
     <div class="container">
@@ -34,54 +34,104 @@
   <button class="menu-button">menu</button>
   <div class="toggle"></div>
 </nav>
-
 <header>
-  <div class="content">
-    <h1 class="title">Let's Make Your Own Cinema</h1>
-    <p class="description">
-      Is a guide to creating a personalized movie theater experience. You'll
-      need a projector, screen, and speakers.
-    </p>
-    <button class="button">Get Started</button>
-  </div>
+  <div class="content"></div>
 </header>
+<div class="trailer"></div>
+<div class="detail"></div>
+<img style="width: 40px;" src="" alt="">
       <main>
-        <section class="hero" id="library-hero">
-  <div class="hero-content">
-    <h2 id="hero-title">My movies</h2>
-    <p id="hero-desc">Your movie of the day will appear here</p>
+        <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library</title>
+    <link rel="stylesheet" href="/src/css/my-movies.css" />
+</head>
+<body>
+<div class="library">
+  <img class="hero-image" src="/src/img/bg2.png" alt="Library Hero Image" />
+  <div class="hero-text">
+    <h1 class="hero-title">Create Your <br> Dream Cinema</h1>
+    <p class="hero-desc">
+      This is your guide to designing a personalized movie theater experience<br>
+      with the right equipment, customized decor, and your favorite films.<br>
+      Bring the cinema experience into your own home with cozy seating,<br>
+      dim lighting, and classic movie theater snacks.
+    </p>
   </div>
-</section>
 
-<section class="library" id="library">
-  <h2>Your Saved Movies</h2>
+  <div class="library-container"></div>
 
-  <div class="film-grid" id="filmGrid">
-   
-  </div>
+  <section class="filters" id="filters">
+    <select id="genre">
+      <option value="all">Genre</option>
+      <option value="romance">Romance</option>
+      <option value="detective">Detective</option>
+      <option value="thiriller">Thiriller</option>
+      <option value="action">Action</option>
+      <option value="documentary">Documentary</option>
+      <option value="horror">Horror</option>
+    </select>
+  </section>
 
-  <p id="emptyMessage" class="empty-message hidden">
-    You haven't added any movies yet.
-  </p>
-</section>
+  <section class="movies" id="movies">
+    <div class="movie-list">
+      <ul class="movie-list-ul" id="movie-list-ul">
+        <!-- Movie items will be dynamically inserted here -->
+      </ul>
+    </div>
+    <div class="button" id="button">
+      <button class="load-more-btn" type="button">
+      Load more
+      </button>
+        <p class="empty-message hidden">
+           OOPS...<br>
+           We are sorry!<br>
+           You don't have any movies at your library.
+        </p>
+      <button class="search-movie-btn hidden" type="button">
+       Search movie
+      </button>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
 
       </main>
       <footer class="footer-container">
     <p class="info-p">&copy;
         2025 | All Rights Reserved |</p>
     <div class="footer-info">
-        <p class="info-p">Developed with <span>&hearts;
+        <p class="info-p">Developed with 
+            <span>
+                <svg class="span-heart" width="13" height="13">
+                    <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-heart"></use>
+                </svg>
             </span>by <a href="#" class="footer-link" id="footer-link">GoIT Students</a></p>
     </div>
     <div class="modal">
-        <div class="modal-content"><span class="modal-close-btn">&times;
-            </span>
-            <p class="footer-developers info-p"><b>Developed by:<br></b>A.Furkan Toy<br>Aykut Şahinbaş<br>Burak
-                Ezer<br>Çağla Karabudak Akın<br>Emre Ayvaz<br>Erdem İzcikılınç<br>İlker Şelimen<br>Mehmet Öndüç<br>Özgür
-                Korkmaz<br>Umay Ece Mantar </p>
+        <div class="modal-content">
+            <div class="modal-title">
+                <p class="info-p">... TEAM
+                    <svg class="link-svg" width="30" height="30">
+                        <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-developers"></use>
+                    </svg>
+                </p>
+                <span class="modal-close-btn">&times;</span>
+            </div>
+            
+            <div class="team-container">
+                <ul class="member-card"></ul>
+            </div>
         </div>
     </div>
 </footer>
+
     </div>
   </body>
 </html>
