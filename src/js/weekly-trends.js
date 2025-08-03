@@ -1,3 +1,4 @@
+//import { openModal, closeModal } from "./modal.js";
 const options = {
   method: "GET",
   headers: {
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
           card.style.backgroundSize = "cover";
           card.style.backgroundPosition = "center";
           card.style.display = "flex";
+          card.style.objectFit ="contain";
           card.style.alignItems = "flex-end";
           card.style.borderRadius = "10px";
           card.style.position = "relative";
