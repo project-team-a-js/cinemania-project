@@ -60,6 +60,25 @@ export default defineConfig(({ command }) => {
           );
         },
       },
+      // JS files path fix
+      {
+        name: 'fix-js-paths',
+        generateBundle(options, bundle) {
+          if (command === 'build') {
+            Object.keys(bundle).forEach(fileName => {
+              const file = bundle[fileName];
+              
+              // JS dosyalarını işle
+              if (file.type === 'chunk' && file.code) {
+                file.code = file.code.replace(
+                  /(['"`])(\.\/[^'"`]*\.html)(['"`])/g,
+                  `$1/cinemania-project/$2$3`
+                );
+              }
+            });
+          }
+        }
+      }
     ],
     server: {
       port: 3000,
