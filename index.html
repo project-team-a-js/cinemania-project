@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinemania</title>
     <script type="module" crossorigin src="/cinemania-project/assets/vendor-CJ4cOYKs.js"></script>
-    <script type="module" crossorigin src="/cinemania-project/assets/styles-B_pP_hI7.js"></script>
-    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-DfAWteiN.css">
+    <script type="module" crossorigin src="/cinemania-project/assets/styles-3YJtJz79.js"></script>
+    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-COHu8mgQ.css">
   </head>
   <body>
     <div class="container">
@@ -84,34 +84,81 @@
 </section>
       </main>
       <footer class="footer-container">
-    <p class="info-p">&copy;
-        2025 | All Rights Reserved |</p>
-    <div class="footer-info">
-        <p class="info-p">Developed with 
-            <span>
-                <svg class="span-heart" width="13" height="13">
-                    <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-heart"></use>
-                </svg>
-            </span>by <a href="#" class="footer-link" id="footer-link">GoIT Students</a></p>
+  <p class="info-p">&copy; 2025 | All Rights Reserved |</p>
+  <div class="footer-info">
+    <p class="info-p">
+      Developed with
+      <span>
+        <svg class="span-heart" width="13" height="13">
+          <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-heart"></use>
+        </svg> </span
+      >by <a href="#" class="footer-link" id="footer-link">GoIT Students</a>
+    </p>
+  </div>
+  <div class="team-modal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <p class="info-p">
+          TEAM
+          <svg class="link-svg" width="30" height="30">
+            <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-developers"></use>
+          </svg>
+        </p>
+        <span class="modal-close-btn">&times;</span>
+      </div>
+
+      <div class="team-container">
+        <ul class="member-card"></ul>
+      </div>
     </div>
-    <div class="modal">
-        <div class="modal-content">
-            <div class="modal-title">
-                <p class="info-p">... TEAM
-                    <svg class="link-svg" width="30" height="30">
-                        <use href="/cinemania-project/assets/upFooIcons-B53gQIQq.svg#creators-developers"></use>
-                    </svg>
-                </p>
-                <span class="modal-close-btn">&times;</span>
-            </div>
-            
-            <div class="team-container">
-                <ul class="member-card"></ul>
-            </div>
-        </div>
-    </div>
+  </div>
 </footer>
 
     </div>
+    <!-- Film Detay Modalı -->
+<div id="movie-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-body">
+      <div class="modal-poster-section">
+        <img id="modal-poster" src="" alt="Film Poster" />
+      </div>
+      <div class="modal-info-section">
+        <h2 id="modal-title"></h2>
+        
+        <div class="modal-meta">
+          <div class="modal-rating-section">
+            <span class="modal-label">Vote / Votes</span>
+            <div class="rating-display">
+              <span id="modal-rating" class="rating-score"></span>
+              <span class="rating-separator">/</span>
+              <span id="modal-vote-count" class="vote-count"></span>
+            </div>
+          </div>
+          
+          <div class="modal-popularity">
+            <span class="modal-label">Popularity</span>
+            <span id="modal-popularity" class="popularity-score"></span>
+          </div>
+          
+          <div class="modal-genre">
+            <span class="modal-label">Genre</span>
+            <span id="modal-genres" class="genre-list"></span>
+          </div>
+        </div>
+        
+        <div class="modal-overview">
+          <h3>ABOUT</h3>
+          <p id="modal-overview"></p>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="add-to-library-btn">Add to my library</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   </body>
 </html>
