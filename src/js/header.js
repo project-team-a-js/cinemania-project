@@ -5,12 +5,7 @@ const mobileMenu = document.querySelector(".mobile-menu");
 menuButton.addEventListener("click", myFunction);
 
 function myFunction() {
-  if (mobileMenu.style.display != "none") {
-    mobileMenu.style.display = "block";
-  } else {
-    mobileMenu.style.display = "none";
-  }
-  console.log(mobileMenu.style.display);
+  mobileMenu.classList.add("displayB");
 }
 // Dark-Light Mode
 const body = document.querySelector("body"),
@@ -33,3 +28,9 @@ toggle.addEventListener("click", () => {
 });
 
 toggle.addEventListener("click", () => toggle.classList.toggle("active"));
+
+document.addEventListener('mouseup', function(e) {
+    if (!mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove("displayB");
+    }
+});

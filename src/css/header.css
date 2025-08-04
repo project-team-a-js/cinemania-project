@@ -8,6 +8,8 @@ button {
   color: var(--black);
 }
 
+
+
 .mobile-menu {
   background-color: var(--bg-primary);
   width: 204px;
@@ -16,6 +18,21 @@ button {
   padding: 30px;
   z-index: 1;
   display: none;
+}
+
+.displayB {
+  display: block;
+}
+
+.video-modal {
+  background-color: var(--bg-primary);
+  filter: drop-shadow(0 0 0.75rem var(--orange));
+  border-radius: 16px;
+}
+
+.video-modal-close {
+  color: var(--text-primary);
+  
 }
 
 .mobile-menu ul a {
@@ -60,6 +77,35 @@ nav {
   height: 48px;
   align-items: center;
   margin: 0 auto;
+}
+
+.trailer-error {
+  width: 280px;
+  height: 289px;
+  border: none;
+  border-radius: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  position: relative;
+  font-weight: 400;
+  font-size: 16px;
+  filter: drop-shadow(0 0 0.75rem var(--orange));
+}
+
+.trailer-error img {
+  width: 159px;
+  height: 153px;
+  top: 128px;
+  left: 60px;
+  position: absolute;
+}
+
+.trailer-error p {
+  width: 214px;
+  height: 65px;
+  top: 39px;
+  left: 33px;
+  position: absolute;
 }
 
 .title {
@@ -172,6 +218,30 @@ nav {
     height: 432px;
   }
 
+  .trailer-error {
+    width: 609px;
+    height: 400px;
+  }
+
+  .trailer-error img {
+    width: 296px;
+    height: 260px;
+    top: 124px;
+    left: 303px;
+
+    position: absolute;
+  }
+
+  .trailer-error p {
+    width: 321px;
+    height: 92;
+    top: 132px;
+    left: 44px;
+    font-weight: 400;
+    font-size: 24px;
+    position: absolute;
+  }
+
   iframe {
     width: 854px;
     height: 480px;
@@ -233,7 +303,8 @@ nav {
     vertical-align: middle;
   }
 
-  .button, .button2 {
+  .button,
+  .button2 {
     top: 500px;
   }
 
