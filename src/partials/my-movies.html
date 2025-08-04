@@ -1,45 +1,48 @@
-    <div class="library">
-        <img class="hero-image" src="/src/img/bg2.png" alt="Library Hero Image" />
-        <div class="hero-text">
-            <h1 class="hero-title">Create Your <br> Dream Cinema</h1>
-            <p class="hero-desc">
-                This is your guide to designing a personalized movie theater experience<br>
-                with the right equipment, customized decor, and your favorite films.<br>
-                Bring the cinema experience into your own home with cozy seating,<br>
-                dim lighting, and classic movie theater snacks.
-            </p>
-        </div>
-
-        <div class="library-container"></div>
-
-        <section class="filters" id="filters">
-            <select id="genre">
-                <option value="all">Genre</option>
-                <option value="romance">Romance</option>
-                <option value="detective">Detective</option>
-                <option value="thiriller">Thiriller</option>
-                <option value="action">Action</option>
-                <option value="documentary">Documentary</option>
-                <option value="horror">Horror</option>
-            </select>
-        </section>
-
-        <section class="movies" id="movies">
-            <div class="movie-list">
-                <ul class="movie-list-ul" id="filmGrid">
-                    </ul>
-            </div>
-        </section>
-
-        <p class="empty-message hidden" id="emptyMessage">
-            OOPS...<br>
-            We are sorry!<br>
-            You don't have any movies at your library.
+<div class="library">
+      <img class="hero-image" src="/src/img/bg2.png" alt="Library Hero Image" />
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Create Your <br />
+          Dream Cinema
+        </h1>
+        <p class="hero-desc">
+          This is your guide to designing a personalized movie theater
+          experience<br />
+          with the right equipment, customized decor, and your favorite
+          films.<br />
+          Bring the cinema experience into your own home with cozy seating,<br />
+          dim lighting, and classic movie theater snacks.
         </p>
-        <button class="search-movie-btn hidden" type="button">
-            Search movie
-        </button>
-    </div>
+      </div>
 
-    <script src="/src/js/my-movies.js"></script>
-    <script src="/src/js/filters.js"></script>
+      <div class="library-container"></div>
+
+      <section class="filters" id="filters">
+        <select id="genre">
+          <option value="all">Genre</option>
+          <option value="romance">Romance</option>
+          <option value="detective">Detective</option>
+          <option value="thriller">Thriller</option>
+          <option value="action">Action</option>
+          <option value="documentary">Documentary</option>
+          <option value="horror">Horror</option>
+        </select>
+      </section>
+
+      <section class="movies" id="movies">
+        <div class="movie-list">
+          <ul class="movie-list-ul" id="movie-list-ul"></ul>
+        </div>
+        <div class="button" id="button">
+          <button class="load-more-btn" type="button">Load more</button>
+          <button id="search-movie-btn" class="visually-hidden" type="button">
+            Search movie
+          </button>
+        </div>
+        <p id="empty-message" class="visually-hidden">
+          OOPS...<br />
+          We are sorry!<br />
+          You don't have any movies at your library.
+        </p>
+      </section>
+    </div>
