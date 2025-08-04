@@ -1,20 +1,13 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #fff;
-}
-
 .catalog-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .search-bar {
   display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 5px 2px 2px 1px;
 }
 
 #search-form {
@@ -26,15 +19,15 @@ body {
 /* input-wrapper içinde input ve clear butonu birlikte */
 .input-wrapper {
   position: relative;
-  width: 260px;
+  width: 224px;
 }
 
 #search-input {
-  width: 100%;
-  padding: 10px 35px 10px 10px;
+  /* padding: 15px 35px 10px 10px; */
+  padding: 10px 20px 16px 16px;
   font-size: 16px;
-  border-radius: 4px;
-  border: 1px solid #fff; /* border her zaman görünür */
+  border-radius: 8px;
+  border: 1px solid #fff;
   background-color: #121212;
   color: #fff;
 }
@@ -43,10 +36,9 @@ body {
   color: #888;
 }
 
-/* Clear butonu input içinde sağda */
 #clear-btn {
   position: absolute;
-  left: 270px;
+  left: 225px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -61,29 +53,33 @@ body {
 }
 
 #year-select {
-  padding: 10px;
+  display: none;
+  width: 95px;
+  height: 48px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 12px 12px 12px 16px;
   font-size: 16px;
-  margin-left: 50px;
-  padding-right: 28px;
-  border-radius: 4px;
-  border: 1px solid #fff; /* border her zaman görünür */
   background-color: #121212;
-  color: #fff;
+  color: white;
+  box-sizing: border-box;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white'><polygon points='0,0 16,0 8,8'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
+  background-position: right 12px center;
+  background-size: 16px 16px;
   cursor: pointer;
+  scrollbar-width: none;
 }
 
-/* Yıl seçicide hover ve focus durumları */
-#year-select option:hover,
-#year-select option:focus {
-  background-color: transparent !important; /* hover arka plan iptal */
-  color: #f87719 !important;
-  font-weight: bold;
-  font-size: 18px;
+#year-select option {
+  color: white;
+  background-color: #1e1e1e;
+}
+
+#year-select::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 /* Arama butonu */
@@ -114,7 +110,7 @@ body {
 /* Film listesi 3 sütun */
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); */
   gap: 20px;
 }
 
@@ -173,12 +169,255 @@ body {
   width: 18px;
   height: 18px;
   fill: none;
-  stroke: #ffa500;
+  stroke: url(#starGradientStroke);
   stroke-width: 2;
 }
 
 /* Dolu yıldızlar için gradient fill */
 .star.filled {
-  fill: url(#starGradient);
-  stroke: none;
+  fill: url(#starGradientFill);
+  stroke: url(#starGradientStroke);
+}
+
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  user-select: none;
+}
+
+/* Bu kısımla < ve > butonlarını yuvarlaktan çıkarıyoruz */
+.arrow-btn {
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 0 8px;
+  line-height: 36px;
+}
+
+.page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 36px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.page-btn:hover {
+  background: linear-gradient(141.22deg, #f84119 9.4%, #ffc226 91.91%);
+  cursor: pointer;
+}
+
+.ellipsis {
+  color: white;
+  font-size: 20px;
+  line-height: 36px;
+  user-select: none;
+  padding: 0 5px;
+}
+
+@media (min-width: 768px) {
+  .catalog-container {
+    min-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  #year-select {
+    display: block;
+    width: 95px;
+    height: 48px;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 12px 12px 12px 16px;
+    font-size: 16px;
+    background-color: #121212;
+    color: white;
+    box-sizing: border-box;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    cursor: pointer;
+    scrollbar-width: none;
+  }
+
+  #year-select option {
+    color: white;
+    background-color: #1e1e1e;
+  }
+
+  #year-select::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  #search-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.3s ease;
+  }
+
+  #search-btn:hover,
+  #search-btn:focus,
+  #search-btn:active {
+    background: linear-gradient(
+      141.22deg,
+      #f84119 9.4%,
+      rgba(248, 159, 25, 0.68) 91.91%
+    );
+  }
+
+  .movie-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  #search-form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 15px 35px 10px 10px;
+    padding: 10px 40px 16px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background-color: #121212;
+    color: #fff;
+  }
+}
+
+@media (min-width: 1280px) {
+  .catalog-container {
+    min-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  #year-select {
+    display: block;
+    width: 95px;
+    height: 48px;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 12px 12px 12px 16px;
+    font-size: 16px;
+    background-color: #121212;
+    color: white;
+    box-sizing: border-box;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    cursor: pointer;
+    scrollbar-width: none;
+  }
+
+  #year-select option {
+    color: white;
+    background-color: #1e1e1e;
+  }
+
+  #year-select::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  #search-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.3s ease;
+  }
+
+  #search-btn:hover,
+  #search-btn:focus,
+  #search-btn:active {
+    background: linear-gradient(
+      141.22deg,
+      #f84119 9.4%,
+      rgba(248, 159, 25, 0.68) 91.91%
+    );
+  }
+
+  .movie-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  #search-form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 15px 35px 10px 10px;
+    padding: 10px 40px 16px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background-color: #121212;
+    color: #fff;
+  }
 }
