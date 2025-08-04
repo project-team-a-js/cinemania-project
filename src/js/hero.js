@@ -42,28 +42,41 @@ const createCard = ({ title, overview, name }) => {
 };
 
 const createDetail = ({
-  id,
+  popularity,
   vote_average,
   vote_count,
   overview,
   poster_path,
-  popularity,
+  original_title,
 }) => {
   const card = document.createElement("div");
   card.innerHTML = `
-  	
-    <dialog class="video-modal2">
-	<form method="dialog">
-		<button class="video-modal-close">X</button>
-	</form>
-  <img style="width: 40px;" src="https://image.tmdb.org/t/p/original${poster_path}" alt="">
-	<pre>${id}
-  ${vote_average}
-  ${vote_count}
-  ${overview}
-  ${popularity}</pre>
+  <dialog class="video-modal2">
+  <form method="dialog">
+    <button class="video-modal-close">X</button>
+  </form>
+  <div class="movie-detail-card">
+    <img src="https://image.tmdb.org/t/p/original${poster_path}" alt="" />
+    <div>
+      <div>
+        <h1>${original_title}</h1>
+      </div>
+      <div class="box">
+        <div>
+          <h2>Vote / Votes</h2>
+          <p>${vote_average} / ${vote_count}</p>
+        </div>
+        <div>
+          <h2>Popularity</h2>
+          <p>${popularity}</p>
+        </div>
+        <div><h2>About</h2></div>
+        <p>${overview}</p>
+      </div>
+    </div>
+  </div>
 </dialog>
-    `;
+  `;
   return card;
 };
 
@@ -134,4 +147,3 @@ const loadDetails = async (index) => {
 };
 
 loadMovie(Math.floor(Math.random() * 19));
-
