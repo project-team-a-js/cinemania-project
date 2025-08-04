@@ -1,130 +1,124 @@
-// Sayfa yüklendiğinde çalışacak ana işlev
+// my-movies.js
+
+import axios from "axios";
+
+// Diğer JS dosyalarında da kullanılan API anahtarı ve URL'ler
+const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
+
 document.addEventListener('DOMContentLoaded', () => {
-    // HTML'deki gerekli elementleri seçiyoruz
-    // Film listesi ul elementini ID'sine göre seçtik
-    const filmGrid = document.getElementById('movie-list-ul');
-    // Boş mesaj p elementini sınıfına göre seçtik
-    const emptyMessage = document.querySelector('.empty-message');
-    // Search movie butonu ve Load more butonu
+    const filmGrid = document.getElementById('movie-grid');
+    const emptyMessage = document.getElementById('empty-message');
     const searchMovieBtn = document.querySelector('.search-movie-btn');
     const loadMoreBtn = document.querySelector('.load-more-btn');
-    // Filtreleme bölümü
     const filterSection = document.getElementById('filters');
-    
-    // Sayfa yüklendiğinde filmleri render et
-    renderMyMovies();
-    
-    // Event listener'lar (örneğin film kartlarına tıklama, modal işlemleri)
-    // Bu kod parçası, kartlara tıklandığında modalı açma işlevini tetikler.
-    if (filmGrid) {
-        filmGrid.addEventListener('click', (event) => {
-            // Tıklanan elementin en yakın film kartını bul
-            const filmCard = event.target.closest('.film-card');
-            if (filmCard) {
-                const filmId = filmCard.dataset.id;
-                // Film detaylarını gösteren modalı açma işlevi burada çağrılacak.
-                // Örneğin: openModal(filmId);
-                console.log(`Film ID'si ${filmId} olan kart tıklandı.`);
-                // Bu noktada filmi localStorage'dan bulup modal'a gönderebilirsiniz.
-            }
-        });
-    }
-
-    // Filtreleme için `select` elementine `change` eventi ekle
     const genreSelect = document.getElementById('genre');
-    if (genreSelect) {
-        genreSelect.addEventListener('change', (event) => {
-            const selectedGenre = event.target.value;
-            // Filtreleme işlemini tetikle
-            renderMyMovies(selectedGenre); 
-        });
-    }
 
-    // "Search movie" butonuna tıklama olayı
-    if (searchMovieBtn) {
-        searchMovieBtn.addEventListener('click', () => {
-            // Butonun tıklanma durumunda ne olacağını buraya yaz
-            // Örneğin: window.location.href = '/catalog.html';
-            console.log('Search movie button clicked!');
-        });
-    }
+    let allMovies = []; // Tüm filmleri saklayacak
+    let filteredMovies = [];
+    let currentPage = 1; // Sayfalama için
+    const moviesPerPage = 20; // Her sayfada kaç film gösterileceği
 
-    /**
-     * localStorage'dan filmleri alıp ekranda render eden ana fonksiyon
-     * @param {string} filterGenre - Seçilen türü (genre) filtrelemek için kullanır.
-     */
-    function renderMyMovies(filterGenre = 'all') {
-        // localStorage'dan 'myLibrary' anahtarıyla kaydedilmiş veriyi al
-        const movies = JSON.parse(localStorage.getItem('myLibrary')) || [];
-        
-        // Filtreleme işlemi (localStorage'a tam film nesneleri kaydedilince çalışacaktır)
-        let filteredMovies = movies;
-        if (filterGenre !== 'all') {
-            filteredMovies = movies.filter(movie => {
-                // Film nesnesinin türlerini kontrol et
-                return movie.genres && movie.genres.some(genre => genre.name.toLowerCase() === filterGenre.toLowerCase());
-            });
-        }
-        
-        // Önceki film listesini temizle
-        if (filmGrid) {
-            filmGrid.innerHTML = '';
+    // Sayfa yüklendiğinde filmleri API'den çek ve render et
+    init();
+
+    async function init() {
+        const movieIds = getMyLibrary();
+        if (movieIds.length === 0) {
+            handleEmptyLibrary();
+            return;
         }
 
-        // Eğer hiç film yoksa
-        if (filteredMovies.length === 0) {
-            if (emptyMessage) {
-                emptyMessage.classList.remove('hidden'); // Boş mesajı göster
-            }
-            if (filmGrid) {
-                filmGrid.style.display = 'none'; // Film listesini gizle
-            }
-            if (loadMoreBtn) {
-                loadMoreBtn.classList.add('hidden'); // Load more butonunu gizle
-            }
-            if (searchMovieBtn) {
-                searchMovieBtn.classList.remove('hidden'); // Search movie butonunu göster
-            }
-            if (filterSection) {
-                filterSection.style.display = 'none'; // Filtre bölümünü gizle
-            }
-        } else {
-            // Filmler varsa
-            if (emptyMessage) {
-                emptyMessage.classList.add('hidden'); // Boş mesajı gizle
-            }
-            if (filmGrid) {
-                filmGrid.style.display = 'grid'; // Film listesini göster
-            }
-            if (loadMoreBtn) {
-                loadMoreBtn.classList.remove('hidden'); // Load more butonunu göster
-            }
-            if (searchMovieBtn) {
-                searchMovieBtn.classList.add('hidden'); // Search movie butonunu gizle
-            }
-            if (filterSection) {
-                filterSection.style.display = 'block'; // Filtre bölümünü göster
-            }
+        try {
+            allMovies = await fetchAllMovies(movieIds);
+            // Türleri de eş zamanlı olarak alalım
+            await fetchGenres();
             
-            // Her bir film için bir film kartı oluştur ve ekrana ekle
-            filteredMovies.forEach(movie => {
-                const movieCardHTML = createMovieCard(movie);
-                filmGrid.insertAdjacentHTML('beforeend', movieCardHTML);
-            });
+            // Eğer bir filtre seçili ise, ona göre filtreleme yap
+            const selectedGenre = genreSelect.value;
+            filteredMovies = filterMoviesByGenre(allMovies, selectedGenre);
+            
+            renderMovies();
+        } catch (error) {
+            console.error("Filmler çekilirken bir hata oluştu:", error);
+            handleEmptyLibrary();
         }
     }
 
-    /**
-     * Tek bir film için HTML kart şablonu oluşturan fonksiyon.
-     * @param {object} movie - Film verilerini içeren nesne.
-     * @returns {string} - Film kartının HTML dizesi.
-     */
-    function createMovieCard(movie) {
-        // Filmin resminin tam yolunu oluştur
-        const posterUrl = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+    async function fetchAllMovies(movieIds) {
+        const moviePromises = movieIds.map(id => 
+            axios.get(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-EN`)
+        );
+        const responses = await Promise.all(moviePromises);
+        return responses.map(response => response.data);
+    }
+    
+    let genresMap = new Map();
+    async function fetchGenres() {
+        try {
+            const response = await axios.get(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=en-EN`);
+            response.data.genres.forEach(genre => {
+                genresMap.set(genre.id, genre.name);
+            });
+        } catch (error) {
+            console.error("Error fetching movie genres:", error);
+        }
+    }
+
+    function getMyLibrary() {
+        const library = localStorage.getItem("myLibrary");
+        // Gelen verinin bir dizi ID olması bekleniyor
+        return library ? JSON.parse(library) : [];
+    }
+    
+    function filterMoviesByGenre(movies, genreName) {
+        if (genreName === 'all') {
+            return movies;
+        }
+        return movies.filter(movie => {
+            return movie.genres && movie.genres.some(g => g.name.toLowerCase() === genreName.toLowerCase());
+        });
+    }
+
+    function renderMovies() {
+        if (!filmGrid) return;
         
-        // Filmin türlerini listele
-        // Burada `movie.genres` nesnesini kulanılıyor. `up-coming.js`'de tam nesne kaydedildiği için bu çalışacak.
+        // Mevcut sayfadaki filmleri al
+        const start = (currentPage - 1) * moviesPerPage;
+        const end = start + moviesPerPage;
+        const moviesToRender = filteredMovies.slice(start, end);
+
+        // Boş mesajı ve butonları yönet
+        if (moviesToRender.length === 0) {
+            handleEmptyLibrary();
+            return;
+        } else {
+            emptyMessage.classList.add('hidden');
+            filmGrid.style.display = 'grid';
+            searchMovieBtn.classList.add('hidden');
+            filterSection.style.display = 'block';
+            
+            // Load more butonu
+            if (end >= filteredMovies.length) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        // Film kartlarını oluştur ve ekle
+        moviesToRender.forEach(movie => {
+            const movieCardHTML = createMovieCard(movie);
+            filmGrid.insertAdjacentHTML('beforeend', movieCardHTML);
+        });
+    }
+
+    function createMovieCard(movie) {
+        const posterUrl = movie.poster_path
+            ? `${IMAGE_BASE_URL}w500${movie.poster_path}`
+            : "https://via.placeholder.com/500x750?text=No+Image";
+
         const genres = movie.genres ? movie.genres.map(genre => genre.name).join(', ') : 'Tür bilgisi yok';
 
         return `
@@ -139,5 +133,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </li>
         `;
+    }
+
+    function handleEmptyLibrary() {
+        if (emptyMessage) emptyMessage.classList.remove('hidden');
+        if (filmGrid) filmGrid.style.display = 'none';
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+        if (searchMovieBtn) searchMovieBtn.classList.remove('hidden');
+        if (filterSection) filterSection.style.display = 'none';
+    }
+
+    // Event listener'lar
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentPage++;
+            renderMovies();
+        });
+    }
+
+    if (genreSelect) {
+        genreSelect.addEventListener('change', (event) => {
+            const selectedGenre = event.target.value;
+            currentPage = 1;
+            filteredMovies = filterMoviesByGenre(allMovies, selectedGenre);
+            if (filmGrid) filmGrid.innerHTML = '';
+            renderMovies();
+        });
+    }
+
+    if (searchMovieBtn) {
+        searchMovieBtn.addEventListener('click', () => {
+            window.location.href = '/search-page.html'; // veya uygun olan sayfa
+        });
     }
 });
