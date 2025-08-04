@@ -17,9 +17,9 @@ const container = document.querySelector(".content");
 const containerDetail = document.querySelector(".detail");
 const containerTrailer = document.querySelector(".trailer");
 
-const createCard = ({ title, overview,name }) => {
+const createCard = ({ title, overview, name }) => {
   const card = document.createElement("div");
-  if(title!==undefined){
+  if (title !== undefined) {
     card.innerHTML = `
   	<h1 class="title">${title}</h1>
     <p class="description">
@@ -41,13 +41,20 @@ const createCard = ({ title, overview,name }) => {
   return card;
 };
 
-const createDetail = ({ id,vote_average,vote_count,overview,poster_path,popularity }) => {
+const createDetail = ({
+  id,
+  vote_average,
+  vote_count,
+  overview,
+  poster_path,
+  popularity,
+}) => {
   const card = document.createElement("div");
   card.innerHTML = `
   	
     <dialog class="video-modal2">
 	<form method="dialog">
-		<button class="video-modal-close">Close</button>
+		<button class="video-modal-close">X</button>
 	</form>
   <img style="width: 40px;" src="https://image.tmdb.org/t/p/original${poster_path}" alt="">
 	<pre>${id}
@@ -65,7 +72,7 @@ const createTrailer = ({ key }) => {
   card.innerHTML = `
 <dialog class="video-modal">
 	<form method="dialog">
-		<button class="video-modal-close">Close</button>
+		<button class="video-modal-close">X</button>
 	</form>
 	<iframe src="https://www.youtube.com/embed/${key}">
 </iframe>
@@ -89,13 +96,28 @@ const loadMovie = async (index) => {
 const loadTrailer = async (id) => {
   const { results } = await getTrailer(id);
   const trailer = results.map(createTrailer);
-  containerTrailer.replaceChildren(trailer[0]);
-  const openModalButton = document.querySelector('.button');
-	const modal = document.querySelector('.video-modal');
-	
-	openModalButton.addEventListener('click', function onOpen() {
-		modal.showModal();
-	});
+  const openModalButton = document.querySelector(".button");
+  if (trailer[0] != undefined) {
+    containerTrailer.replaceChildren(trailer[0]);
+    const modal = document.querySelector(".video-modal");
+    openModalButton.addEventListener("click", function onOpen() {
+      modal.showModal();
+    });
+  } else {
+    openModalButton.addEventListener("click", function onOpen() {
+      var myDialog = document.createElement("dialog");
+      myDialog.classList.add("trailer-error");
+      containerTrailer.replaceChildren(myDialog);
+      myDialog.innerHTML = `
+      <form method="dialog">
+		<button class="video-modal-close">X</button>
+	</form>
+  <p>OOPS... We are very sorry! But we couldn’t find the trailer.</p>
+  <img src="../img/IMG_9881 1.png" alt="">
+`;
+      myDialog.showModal();
+    });
+  }
 };
 
 const loadDetails = async (index) => {
@@ -103,12 +125,13 @@ const loadDetails = async (index) => {
   const cards = results.map(createDetail);
   containerDetail.replaceChildren(cards[index]);
 
-  const openModalButton2 = document.querySelector('.button2');
-	const modal = document.querySelector('.video-modal2');
-	
-	openModalButton2.addEventListener('click', function onOpen() {
-		modal.showModal();
-	});
+  const openModalButton2 = document.querySelector(".button2");
+  const modal = document.querySelector(".video-modal2");
+
+  openModalButton2.addEventListener("click", function onOpen() {
+    modal.showModal();
+  });
 };
 
 loadMovie(Math.floor(Math.random() * 19));
+
