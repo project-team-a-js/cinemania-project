@@ -1,0 +1,338 @@
+/* ================================
+   YEDEK STYLE'LAR - GERİ ALMA İÇİN
+   ================================
+   Orijinal style'lara geri dönmek için bu bölümü kullanın:
+   
+   ORIJINAL MODAL BODY:
+   .modal-body { display: flex; height: 100%; width: 100%; }
+   
+   ORIJINAL POSTER SECTION:
+   .modal-poster-section { width: 350px; height: 100%; flex-shrink: 0; }
+   
+   ORIJINAL MODAL CONTENT:
+   .modal-content {
+     background: #1a1a1a;
+     border-radius: 15px;
+     width: 900px;
+     height: 600px;
+     position: relative;
+     box-shadow: 0 0 30px 10px rgba(248, 119, 25, 0.4);
+     overflow: hidden;
+     animation: modalSlideIn 0.3s ease-out;
+   }
+   ================================ */
+
+/* Modal Overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content Container */
+.modal-content {
+  background: #1a1a1a;
+  border-radius: 15px;
+  width: 750px;
+  height: 600px;
+  position: relative;
+  box-shadow: 0 0 30px 10px rgba(248, 119, 25, 0.4);
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Modal Body - Horizontal Layout */
+.modal-body {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* Left Side - Poster */
+.modal-poster-section {
+  width: 320px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.modal-poster-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px 0 0 15px;
+}
+
+/* Right Side - Movie Info */
+.modal-info-section {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: white;
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+
+/* Movie Title */
+.modal-info-section h2 {
+  margin: 0 0 18px 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  text-align: left;
+}
+
+/* Movie Meta Info */
+.modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.modal-rating-section,
+.modal-popularity,
+.modal-genre {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Meta Labels */
+.modal-label {
+  font-size: 15px;
+  color: #b0b0b0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 6px;
+}
+
+/* Rating Display */
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-score {
+  background: #f87719;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.rating-separator {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 2px;
+}
+
+.vote-count {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  min-width: 32px;
+  text-align: center;
+}
+
+/* Other Meta Values */
+.popularity-score,
+.genre-list {
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+/* About Section */
+.modal-overview {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.modal-overview h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #b0b0b0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-overview p {
+  margin: 0;
+  line-height: 1.6;
+  color: white;
+  font-size: 16px;
+  text-align: left;
+}
+
+/* Action Button */
+.modal-actions {
+  margin-top: 30px;
+}
+
+.add-to-library-btn {
+  background: var(--white-smoke, #fff);
+  border: 2px solid #f87719;
+  color: #f87719;
+  padding: 12px 24px;
+  border-radius: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.add-to-library-btn:hover,
+.add-to-library-btn:focus {
+  background: #f87719;
+  color: #fff;
+  border: 2px solid #f87719;
+  box-shadow: 0 4px 16px rgba(248, 119, 25, 0.13);
+}
+
+.add-to-library-btn:hover {
+  background: #f87719;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(248, 119, 25, 0.3);
+}
+
+/* Close Button */
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: #f87719;
+  cursor: pointer;
+  background: var(--white-smoke, #fff);
+  border: 2px solid #f87719;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+}
+.close-modal:hover,
+.close-modal:focus {
+  background: #f87719;
+  color: #fff;
+  border: 2px solid #f87719;
+  box-shadow: 0 4px 16px rgba(248, 119, 25, 0.13);
+}
+
+.close-modal:hover {
+  color: #f87719;
+  background: rgba(248, 119, 25, 0.1);
+}
+
+/* Modal Display States */
+.modal:not(.hidden) {
+  display: flex;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .modal-poster-section {
+    width: 100%;
+    height: 300px;
+  }
+
+  .modal-poster-section img {
+    border-radius: 15px 15px 0 0;
+  }
+
+  .modal-info-section {
+    padding: 30px;
+  }
+
+  .modal-info-section h2 {
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .modal-content {
+    width: 650px;
+    height: 500px;
+  }
+
+  .modal-poster-section {
+    width: 260px;
+  }
+
+  .modal-info-section {
+    padding: 30px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .modal-content {
+    width: 750px;
+    height: 600px;
+  }
+
+  .modal-poster-section {
+    width: 320px;
+  }
+
+  .modal-info-section {
+    padding: 40px;
+  }
+}

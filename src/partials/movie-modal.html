@@ -1,0 +1,44 @@
+<!-- Film Detay Modalı -->
+<div id="movie-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-body">
+      <div class="modal-poster-section">
+        <img id="modal-poster" src="" alt="Film Poster" />
+      </div>
+      <div class="modal-info-section">
+        <h2 id="modal-title"></h2>
+        
+        <div class="modal-meta">
+          <div class="modal-rating-section">
+            <span class="modal-label">Vote / Votes</span>
+            <div class="rating-display">
+              <span id="modal-rating" class="rating-score"></span>
+              <span class="rating-separator">/</span>
+              <span id="modal-vote-count" class="vote-count"></span>
+            </div>
+          </div>
+          
+          <div class="modal-popularity">
+            <span class="modal-label">Popularity</span>
+            <span id="modal-popularity" class="popularity-score"></span>
+          </div>
+          
+          <div class="modal-genre">
+            <span class="modal-label">Genre</span>
+            <span id="modal-genres" class="genre-list"></span>
+          </div>
+        </div>
+        
+        <div class="modal-overview">
+          <h3>ABOUT</h3>
+          <p id="modal-overview"></p>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="add-to-library-btn">Add to my library</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

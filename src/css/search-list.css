@@ -23,8 +23,9 @@
 }
 
 #search-input {
-  /* padding: 15px 35px 10px 10px; */
   padding: 10px 20px 16px 16px;
+  width: 100%;
+  padding: 15px 35px 10px 10px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #fff;
@@ -82,13 +83,19 @@
   background: transparent;
 }
 
+#year-select::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+
 /* Arama butonu */
 #search-btn {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+  background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -100,11 +107,7 @@
 #search-btn:hover,
 #search-btn:focus,
 #search-btn:active {
-  background: linear-gradient(
-    141.22deg,
-    #f84119 9.4%,
-    rgba(248, 159, 25, 0.68) 91.91%
-  );
+  background: linear-gradient(141.22deg, #F84119 9.4%, rgba(248, 159, 25, 0.68) 91.91%);
 }
 
 /* Film listesi 3 sütun */
@@ -137,7 +140,7 @@
   left: 10px;
   color: #fff;
   z-index: 10;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
   font-weight: bold;
 }
 
@@ -205,7 +208,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+  background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
   color: white;
   font-weight: bold;
   font-size: 14px;
@@ -216,7 +219,7 @@
 }
 
 .page-btn:hover {
-  background: linear-gradient(141.22deg, #f84119 9.4%, #ffc226 91.91%);
+  background: linear-gradient(141.22deg, #F84119 9.4%, #FFC226 91.91%);
   cursor: pointer;
 }
 
@@ -226,7 +229,6 @@
   line-height: 36px;
   user-select: none;
   padding: 0 5px;
-}
 
 @media (min-width: 768px) {
   .catalog-container {
