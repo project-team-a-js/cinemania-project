@@ -1,0 +1,70 @@
+/* Scroll Up Button Styles */
+.scroll-up-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--orange, #f87719);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(248, 119, 25, 0.3);
+}
+
+.scroll-up-btn:hover {
+  background: #e66a15;
+  transform: translateY(0);
+  box-shadow: 0 6px 20px rgba(248, 119, 25, 0.5);
+}
+
+.scroll-up-btn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-up-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.scroll-up-btn:hover svg {
+  transform: translateY(-2px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .scroll-up-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .scroll-up-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Dark theme support */
+[data-theme="dark"] .scroll-up-btn {
+  background: var(--orange, #f87719);
+  box-shadow: 0 4px 12px rgba(248, 119, 25, 0.4);
+}
+
+[data-theme="dark"] .scroll-up-btn:hover {
+  background: #e66a15;
+  box-shadow: 0 6px 20px rgba(248, 119, 25, 0.6);
+}
