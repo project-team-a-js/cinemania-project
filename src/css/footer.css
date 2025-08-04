@@ -45,49 +45,19 @@
   left: 0;
   top: 0;
 }
+
 .modal-content {
-    background-color: var(--bg-primary);
-    margin: auto;
-    padding: 20px 30px 50px 30px;
-    width: 280px;
-    max-height: 100%;
-    overflow-y: auto;
-    position: relative;
-    text-align: center;
-    display: block;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 42%);
-}
-
-.modal-content .info-p{
-    color: var(--text-primary);
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-
-.modal-title{
-    display: grid;
-    grid-template-columns: 10fr 1fr;
-    place-items: center;
-    align-items: center;
-    justify-items: center;
-    margin-bottom: 10px;
-    background-color: var(--bg-primary);
-    margin: auto;
-    padding: 20px 30px 50px 30px;
-    width: 280px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    text-align: center;
-    display: block;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 42%);
+  background-color: var(--bg-primary);
+  margin: auto;
+  padding: 20px 30px 50px 30px;
+  width: 280px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  text-align: center;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 42%);
 }
 
 .modal-content .info-p {
@@ -136,23 +106,15 @@
   align-items: center;
 }
 
-.team-member{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border: 1px solid var(--grey);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .12),
-        0 1px 1px rgba(0, 0, 0, .14),
-        0 1px 1px rgba(0, 0, 0, .2);
-
 .team-member {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 100%;
   border: 1px solid var(--grey);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.14),
-    0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .12),
+      0 1px 1px rgba(0, 0, 0, .14),
+      0 1px 1px rgba(0, 0, 0, .2);
+  gap: 10px;
 }
 
 .team-member:hover {
@@ -160,32 +122,13 @@
     1px 1px 7px var(--orange);
 }
 
-
-.member-img{
-    width: 100%;
-    height: 250px;
-    display: block;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    object-fit:cover;
-}
-
-.member-info{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    padding-top: 5px;
-}
-
-.member-p{
-    color: var(--text-primary);
-    font-size: 20px;
-
-.member-image {
-  width: 200px;
-  height: 180px;
+.member-img {
+  width: 100%;
+  height: 250px;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   object-fit: cover;
 }
 
@@ -194,10 +137,12 @@
   flex-direction: column;
   gap: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 5px;
 }
 
 .member-p {
   color: var(--text-primary);
+  font-size: 20px;
 }
 
 .member-p2 {
