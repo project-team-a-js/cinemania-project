@@ -1,3 +1,8 @@
+body.light .info-votes {
+    background-color: #F8F8F8;
+    color: var(--text-primary);
+}
+
 .upcoming-container {
     width: 100%;
     max-width: 320px;
@@ -84,11 +89,12 @@
 }
 
 .info-votes{
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 14px;
     margin: 0;
 }
