@@ -1,3 +1,5 @@
+import { openMovieModal } from "./modal.js";
+
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 
 // Ana uygulama fonksiyonu
@@ -11,8 +13,17 @@ function initMovieApp() {
   const yearSelect = document.getElementById("year-select");
 
   // Elementlerin varlığını kontrol et
-  if (!searchInput || !clearBtn || !movieList || !searchForm || !pagination || !yearSelect) {
-    console.error("Gerekli HTML elementleri bulunamadı! Şu elementlerin varlığını kontrol edin:");
+  if (
+    !searchInput ||
+    !clearBtn ||
+    !movieList ||
+    !searchForm ||
+    !pagination ||
+    !yearSelect
+  ) {
+    console.error(
+      "Gerekli HTML elementleri bulunamadı! Şu elementlerin varlığını kontrol edin:"
+    );
     console.error("- search-input");
     console.error("- clear-btn");
     console.error("- movie-list");
@@ -105,6 +116,8 @@ function initMovieApp() {
   });
 
   function renderMovies(movies) {
+    currentMovies = movies; // Movies'i global olarak sakla
+
     const gradientDefs = `
       <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
         <defs>
@@ -136,14 +149,16 @@ function initMovieApp() {
             .fill(0)
             .map(
               (_, i) => `
-              <svg class="star ${i < starsCount ? "filled" : ""}" viewBox="0 0 24 24" >
+              <svg class="star ${
+                i < starsCount ? "filled" : ""
+              }" viewBox="0 0 24 24" >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
               </svg>`
             )
             .join("");
 
           return `
-            <div class="movie-card">
+            <div class="movie-card" data-movie-id="${movie.id}">
               <img src="${imgSrc}" alt="${title}" />
               <div class="movie-info">
                 <div class="movie-title">${title.toUpperCase()}</div>
@@ -154,7 +169,26 @@ function initMovieApp() {
           `;
         })
         .join("");
+
+    // Film kartlarına click eventi ekle
+    setupMovieCardClickEvents();
   }
+
+  // Film kartlarına click eventi ekleyen fonksiyon
+  function setupMovieCardClickEvents() {
+    const movieCards = document.querySelectorAll(".movie-card");
+    movieCards.forEach((card, index) => {
+      card.addEventListener("click", () => {
+        // currentMovies array'inden ilgili movie'yi al
+        const movie = currentMovies[index];
+        if (movie) {
+          openMovieModal(movie);
+        }
+      });
+    });
+  }
+
+  let currentMovies = []; // Global olarak movies'i saklayacağız
 
   function renderPagination() {
     pagination.innerHTML = "";

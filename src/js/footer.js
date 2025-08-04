@@ -1,9 +1,9 @@
-const modal = document.querySelector(".modal");
+const modal = document.querySelector(".team-modal");
 const footerLink = document.querySelector(".footer-link");
-const footerCloseBtn = document.querySelector(".modal-close-btn");
+const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
 
-const teamContainer = document.querySelector(".team-container");
-const memberCard = document.querySelector(".member-card");
+const teamContainer = document.querySelector(".team-modal .team-container");
+const memberCard = document.querySelector(".team-modal .member-card");
 
 const teamMembers = [
   {
@@ -78,12 +78,10 @@ const teamMembers = [
   },
 ];
 
-
-function addTeamMember(team) { 
-  
+function addTeamMember(team) {
   memberCard.innerHTML = "";
 
-  team.forEach(member => {
+  team.forEach((member) => {
     const teamMember = document.createElement("li");
     teamMember.classList.add("team-member");
     teamMember.innerHTML = `
@@ -108,35 +106,43 @@ function addTeamMember(team) {
 
     memberCard.appendChild(teamMember);
     teamContainer.appendChild(memberCard);
-
   });
 }
 
-
 function openModal() {
-  modal.style.display = "flex";
-  addTeamMember(teamMembers);
+  if (modal) {
+    modal.style.display = "flex";
+    addTeamMember(teamMembers);
+  }
 }
 
 function closeModal() {
-  modal.style.display = "none";
+  if (modal) {
+    modal.style.display = "none";
+  }
 }
 
-footerLink.addEventListener("click", (event) => {
-  event.preventDefault();
-  openModal();
-});
+if (footerLink) {
+  footerLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    openModal();
+  });
+}
 
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    closeModal();
-  }
-});
+if (modal) {
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+}
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modal.style.display === "flex") {
+  if (event.key === "Escape" && modal && modal.style.display === "flex") {
     closeModal();
   }
 });
 
-footerCloseBtn.addEventListener("click", closeModal);
+if (footerCloseBtn) {
+  footerCloseBtn.addEventListener("click", closeModal);
+}
