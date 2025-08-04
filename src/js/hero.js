@@ -1,3 +1,5 @@
+import { openMovieModal } from "./modal.js";
+
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 const BASE_URL = "https://api.themoviedb.org/3/";
 
@@ -135,14 +137,12 @@ const loadTrailer = async (id) => {
 
 const loadDetails = async (index) => {
   const { results } = await getMovie();
-  const cards = results.map(createDetail);
-  containerDetail.replaceChildren(cards[index]);
+  const selectedMovie = results[index];
 
   const openModalButton2 = document.querySelector(".button2");
-  const modal = document.querySelector(".video-modal2");
 
-  openModalButton2.addEventListener("click", function onOpen() {
-    modal.showModal();
+  openModalButton2.addEventListener("click", function () {
+    openMovieModal(selectedMovie);
   });
 };
 
