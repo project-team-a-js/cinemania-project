@@ -119,7 +119,6 @@ function addTeamMember(team) {
 function openModal() {
   if (modal) {
     modal.style.display = "flex";
-    addTeamMember(teamMembers);
   }
 }
 
