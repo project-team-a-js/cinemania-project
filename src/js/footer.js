@@ -1,3 +1,6 @@
+const svgPath = new URL('./img/upFooIcons.svg', import.meta.url).href;
+const userNoImage = new URL('./img/no-user-image.jpeg', import.meta.url).href;
+
 const modal = document.querySelector(".team-modal");
 const footerLink = document.querySelector(".footer-link");
 const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
@@ -78,16 +81,13 @@ const teamMembers = [
   },
 ];
 
-const userNoImage = "./img/no-user-image.jpeg";
-
-// Tek ve düzgün fonksiyon
 function addTeamMember(team) {
-  // Önce içeriği temizle
   memberCard.innerHTML = "";
 
   team.forEach((member) => {
     // Her üye için resim kontrolü yap
-    const memberImage = member.image === "" ? userNoImage : member.image;
+    // image yolu dinamik olarak oluşturuluyor.
+    const memberImage = member.image === "" ? userNoImage : new URL(member.image, import.meta.url).href;
 
     const teamMember = document.createElement("li");
     teamMember.classList.add("team-member");
@@ -99,12 +99,12 @@ function addTeamMember(team) {
         <div class="member-link-container">
           <a class="member-link" href="${member.linkedLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="./img/upFooIcons.svg#creators-linkedin"></use>
+              <use href="${svgPath}#creators-linkedin"></use>
             </svg>
           </a>
           <a class="member-link" href="${member.gitLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="./img/upFooIcons.svg#creators-github"></use>
+              <use href="${svgPath}#creators-github"></use>
             </svg>
           </a>
         </div>
