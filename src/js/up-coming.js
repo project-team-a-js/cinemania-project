@@ -61,13 +61,18 @@ function myLibraryButtonUpdate(button, movieID) {
 
 //Filmi görüntüleme
 function displayMovie(movie) {
+
+  if (!upcomingMovie) { 
+    console.log("Error: upcomingMovie not found.");
+    return;
+  }
+
   if (!movie) { 
-    const noMovie = document.createElement(`<div>
+    upcomingMovie.innerHTML = `<div>
         <p>OOPS...
           We are very sorry!
           But we couldn’t find any movie.</p>
-      </div>`);
-    upcomingMovie.innerHTML = noMovie;
+      </div>`;
     return;
   }
 
@@ -149,9 +154,7 @@ function displayMovie(movie) {
                 <div class="info-tablet-details">
                     <div class="info-detail">
                         <p class="info-p">Popularity</p>
-                        <span class="info-span">${movie.popularity.toFixed(
-                          2
-                        )}</span>
+                        <span class="info-span">${movie.popularity.toFixed(2)}</span>
                     </div>
                     <div class="info-detail">
                         <p class="info-p">Genres</p>
