@@ -1,7 +1,4 @@
-import { openMovieModal } from "./modal.js";
-
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
-
 // Ana uygulama fonksiyonu
 function initMovieApp() {
   // Elementleri güvenli şekilde seç
@@ -11,7 +8,6 @@ function initMovieApp() {
   const searchForm = document.getElementById("search-form");
   const pagination = document.getElementById("pagination");
   const yearSelect = document.getElementById("year-select");
-
   // Elementlerin varlığını kontrol et
   if (
     !searchInput ||
@@ -22,20 +18,22 @@ function initMovieApp() {
     !yearSelect
   ) {
     console.error(
-      "Gerekli HTML elementleri bulunamadı! Sayfanızın doğru yüklendiğinden emin olun."
+      "Gerekli HTML elementleri bulunamadı! Şu elementlerin varlığını kontrol edin:"
     );
-    return;
+    console.error("- search-input");
+    console.error("- clear-btn");
+    console.error("- movie-list");
+    console.error("- search-form");
+    console.error("- pagination");
+    console.error("- year-select");
+    return; // Fonksiyon içinde return kullanabiliriz
   }
-
   let totalPages = 24;
   let currentPage = 1;
-  let currentMovies = []; // Global olarak movies'i saklayacağız
-
   // Çarpı butonu göster/gizle
   searchInput.addEventListener("input", () => {
     clearBtn.style.display = searchInput.value ? "inline" : "none";
   });
-
   // Çarpı butonu temizleme
   clearBtn.addEventListener("click", () => {
     searchInput.value = "";
@@ -43,13 +41,11 @@ function initMovieApp() {
     currentPage = 1;
     fetchAndRenderMovies();
   });
-
   // Yıl seçimi değişince sayfa 1 yap ve listeyi yenile
   yearSelect.addEventListener("change", () => {
     currentPage = 1;
     fetchAndRenderMovies();
   });
-
   // API URL'si kurucu fonksiyon
   function buildApiUrl(query, page, year) {
     if (query) {
@@ -74,24 +70,20 @@ function initMovieApp() {
       return url.toString();
     }
   }
-
   // Film verisini çek ve render et
   async function fetchAndRenderMovies() {
     const query = searchInput.value.trim();
     const year = yearSelect.value;
-
     try {
       const url = buildApiUrl(query, currentPage, year);
       const response = await fetch(url);
       const data = await response.json();
-
       if (!data.results || data.results.length === 0) {
         movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Sonuç bulunamadı.</p>`;
         totalPages = 1;
         renderPagination();
         return;
       }
-
       totalPages = data.total_pages > 24 ? 24 : data.total_pages;
       renderMovies(data.results);
       renderPagination();
@@ -102,17 +94,13 @@ function initMovieApp() {
       renderPagination();
     }
   }
-
   // Arama formu gönderildiğinde
   searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     currentPage = 1;
     fetchAndRenderMovies();
   });
-
   function renderMovies(movies) {
-    currentMovies = movies; // Movies'i global olarak sakla
-
     const gradientDefs = `
       <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
         <defs>
@@ -127,7 +115,6 @@ function initMovieApp() {
         </defs>
       </svg>
     `;
-
     movieList.innerHTML =
       gradientDefs +
       movies
@@ -137,9 +124,7 @@ function initMovieApp() {
           const imgSrc = poster_path
             ? `https://image.tmdb.org/t/p/w500${poster_path}`
             : "https://via.placeholder.com/500x750?text=No+Image";
-
           const starsCount = Math.round((vote_average || 0) / 2);
-
           const stars = Array(5)
             .fill(0)
             .map(
@@ -151,9 +136,8 @@ function initMovieApp() {
               </svg>`
             )
             .join("");
-
           return `
-            <div class="movie-card" data-movie-id="${movie.id}">
+            <div class="movie-card">
               <img src="${imgSrc}" alt="${title}" />
               <div class="movie-info">
                 <div class="movie-title">${title.toUpperCase()}</div>
@@ -164,30 +148,10 @@ function initMovieApp() {
           `;
         })
         .join("");
-
-    // Film kartlarına click eventi ekle
-    setupMovieCardClickEvents();
   }
-
-  // Film kartlarına click eventi ekleyen fonksiyon
-  function setupMovieCardClickEvents() {
-    const movieCards = document.querySelectorAll(".movie-card");
-    movieCards.forEach((card, index) => {
-      card.addEventListener("click", () => {
-        // currentMovies array'inden ilgili movie'yi al
-        const movie = currentMovies[index];
-        if (movie) {
-          openMovieModal(movie);
-        }
-      });
-    });
-  }
-
   function renderPagination() {
     pagination.innerHTML = "";
-
     const maxVisiblePages = 3;
-
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "<";
     prevBtn.classList.add("arrow-btn");
@@ -199,13 +163,35 @@ function initMovieApp() {
       }
     };
     pagination.appendChild(prevBtn);
-
     // Sayfa aralığı ayarı
-    let startPage = currentPage;
-    let endPage = startPage + maxVisiblePages - 1;
-
-    if (endPage > totalPages) endPage = totalPages;
-
+    let startPage;
+    let endPage;
+    if (currentPage + maxVisiblePages - 1 >= totalPages) {
+      startPage = totalPages - maxVisiblePages + 1;
+      if (startPage < 1) startPage = 1; // Başlangıç sayfasının 1'den küçük olmamasını sağla
+      endPage = totalPages;
+    } else {
+      // Normal durum: mevcut sayfadan ileriye doğru say
+      startPage = currentPage;
+      endPage = startPage + maxVisiblePages - 1;
+    }
+    // İlk sayfadan sonraki sayfa sayısı 1'den fazlaysa, ilk sayfa butonunu göster
+    if (startPage > 1) {
+      const firstPageBtn = document.createElement("button");
+      firstPageBtn.textContent = "01";
+      firstPageBtn.classList.add("page-btn");
+      firstPageBtn.onclick = () => {
+        currentPage = 1;
+        fetchAndRenderMovies();
+      };
+      pagination.appendChild(firstPageBtn);
+      if (startPage > 2) {
+        const ellipsis = document.createElement("span");
+        ellipsis.textContent = "...";
+        ellipsis.classList.add("ellipsis");
+        pagination.appendChild(ellipsis);
+      }
+    }
     for (let i = startPage; i <= endPage; i++) {
       const pageBtn = document.createElement("button");
       pageBtn.textContent = i.toString().padStart(2, "0");
@@ -217,13 +203,11 @@ function initMovieApp() {
       };
       pagination.appendChild(pageBtn);
     }
-
     if (endPage < totalPages) {
       const ellipsis = document.createElement("span");
       ellipsis.textContent = "...";
       ellipsis.classList.add("ellipsis");
       pagination.appendChild(ellipsis);
-
       const lastPageBtn = document.createElement("button");
       lastPageBtn.textContent = totalPages.toString().padStart(2, "0");
       lastPageBtn.classList.add("page-btn");
@@ -233,7 +217,6 @@ function initMovieApp() {
       };
       pagination.appendChild(lastPageBtn);
     }
-
     const nextBtn = document.createElement("button");
     nextBtn.textContent = ">";
     nextBtn.classList.add("arrow-btn");
@@ -246,11 +229,9 @@ function initMovieApp() {
     };
     pagination.appendChild(nextBtn);
   }
-
   // Başlangıçta listeyi getir
   fetchAndRenderMovies();
   renderPagination();
 }
-
 // Sayfa yüklendiğinde uygulamayı başlat
 document.addEventListener("DOMContentLoaded", initMovieApp);
