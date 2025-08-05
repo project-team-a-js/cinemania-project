@@ -5,16 +5,22 @@ import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
+  const isDev = command === 'serve';
+
   return {
-    // Dev için '/', Production için '/cinemania-project/'
-    base: command === 'serve' ? '/' : '/cinemania-project/',
+    // Geliştirme ortamında base URL '/',
+    // Üretim ortamında GitHub Pages'in repo adı ('/cinemania-project/')
+    base: isDev ? '/' : '/cinemania-project/',
     
     define: {
-      [command === 'serve' ? 'global' : '_global']: {},
+      [isDev ? 'global' : '_global']: {},
     },
+    
     root: 'src',
+    
     build: {
       sourcemap: true,
+      
       rollupOptions: {
         input: {
           main: './src/index.html',
@@ -41,9 +47,14 @@ export default defineConfig(({ command }) => {
           },
         },
       },
+      
       outDir: '../dist',
       emptyOutDir: true,
+      
+      // Vite'ın tüm statik dosyaların yolunu otomatik olarak 'base' ayarına göre düzeltmesini sağlar.
+      assetsDir: 'assets',
     },
+    
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
@@ -60,26 +71,10 @@ export default defineConfig(({ command }) => {
           );
         },
       },
-      // JS files path fix
-      {
-        name: 'fix-js-paths',
-        generateBundle(options, bundle) {
-          if (command === 'build') {
-            Object.keys(bundle).forEach(fileName => {
-              const file = bundle[fileName];
-              
-              // JS dosyalarını işle
-              if (file.type === 'chunk' && file.code) {
-                file.code = file.code.replace(
-                  /(['"`])(\.\/[^'"`]*\.html)(['"`])/g,
-                  `$1/cinemania-project/$2$3`
-                );
-              }
-            });
-          }
-        }
-      }
+      // JS dosyalarındaki path'leri düzeltmek için özel olarak yazdığınız plugin'i silebilirsiniz.
+      // Çünkü 'base' ayarı bu işi sizin yerinize yapacaktır.
     ],
+    
     server: {
       port: 3000,
       open: true,
