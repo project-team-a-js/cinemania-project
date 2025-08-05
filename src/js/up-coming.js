@@ -9,6 +9,7 @@ const upcomingMovie = document.querySelector(".upcoming-movie");
 let genresMap = new Map(); //key: ID, value: genre name
 let currentMovie = null; //resize için
 
+//Türleri getir
 async function fetchGenres() {
   try {
     const response = await axios.get(`${BASE_URL}/3/genre/movie/list?api_key=${API_KEY}&language=en-EN`);
@@ -21,10 +22,12 @@ async function fetchGenres() {
   }
 }
 
+//Türleri isimlere dönüştür
 function getGenresNames(genreIds) {
   return genreIds.map((id) => genresMap.get(id) || "Unknown Genre").join(", ");
 }
 
+//Tarih aralığını belirle
 function getMonthDateRange() {
   const today = new Date();
   const year = today.getFullYear();
@@ -47,6 +50,7 @@ function getMonthDateRange() {
   };
 }
 
+//Button kontrolü
 function myLibraryButtonUpdate(button, movieID) {
   if (isMovieInLibrary(movieID)) {
     button.textContent = "Remove from My Library";
@@ -55,6 +59,7 @@ function myLibraryButtonUpdate(button, movieID) {
   }
 }
 
+//Filmi görüntüleme
 function displayMovie(movie) {
   if (!movie) { 
     const noMovie = document.createElement(`<div>
@@ -70,7 +75,7 @@ function displayMovie(movie) {
 
   let imageUrl, srcset, sizes, imageClass;
 
-  const windowWidth = window.innerWidth;
+  const windowWidth = window.innerWidth;//Pencere boyutuna göre görseli almak için
 
   if (windowWidth >= 1280 && movie.backdrop_path) {
     // DESKTOP için backdrop_path
@@ -109,10 +114,10 @@ function displayMovie(movie) {
     : "Unknown Release Date";
   const voteAverage = movie.vote_average
     ? movie.vote_average.toFixed(1)
-    : "";
+    : "-";
   const voteCount = movie.vote_count
     ? movie.vote_count.toLocaleString()
-    : "";
+    : "-";
   const genres = getGenresNames(movie.genre_ids);
 
   const movieTitle = movie.title.toUpperCase();
@@ -159,9 +164,7 @@ function displayMovie(movie) {
                 <p class="info-p info-about">ABOUT</p>
                 <p class="info-p">${movie.overview}</p>
             </div>
-            <button class="addLibrary" data-id="${
-              movie.id
-            }">Add to My Library</button>
+            <button class="addLibrary" data-id="${movie.id}">Add to My Library</button>
         </div>
     </div>`;
 
@@ -183,6 +186,9 @@ function displayMovie(movie) {
   });
 }
 
+
+
+//O ayın filmlerinden rastgele görüntüleme
 async function randomUpcomingMovie() {
   await fetchGenres();
 
@@ -232,17 +238,20 @@ function getMyLibrary() {
   return library ? JSON.parse(library) : [];
 }
 
-function removeFromLibrary(movieID) {
+/*function removeFromLibrary(movieID) {
   let myLibrary = getMyLibrary();
   myLibrary = myLibrary.filter((id) => id !== movieID);
   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-}
+}*/
 
+//LocalStorageda filmin varlığını kontrol etme
 function isMovieInLibrary(movieID) {
   const myLibrary = getMyLibrary();
   return myLibrary.includes(movieID);
 }
 
+
+//Pencere boyutuna göre görseli güncelleme
 function debounce(func, delay) {
   let timeout;
   return function (...args) {

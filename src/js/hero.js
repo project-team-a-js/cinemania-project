@@ -1,3 +1,5 @@
+import { openMovieModal } from "./modal.js";
+
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 const BASE_URL = "https://api.themoviedb.org/3/";
 
@@ -14,14 +16,13 @@ const getTrailer = async (id) => {
 };
 
 const container = document.querySelector(".content");
-const containerDetail = document.querySelector(".detail");
 const containerTrailer = document.querySelector(".trailer");
 
 const createCard = ({ title, overview, name }) => {
   const card = document.createElement("div");
   if (title !== undefined) {
     card.innerHTML = `
-  	<h1 class="title">${title}</h1>
+    <h1 class="title">${title}</h1>
     <p class="description">
       ${overview}
     </p>
@@ -30,7 +31,7 @@ const createCard = ({ title, overview, name }) => {
     `;
   } else {
     card.innerHTML = `
-  	<h1 class="title">${name}</h1>
+    <h1 class="title">${name}</h1>
     <p class="description">
       ${overview}
     </p>
@@ -41,57 +42,17 @@ const createCard = ({ title, overview, name }) => {
   return card;
 };
 
-const createDetail = ({
-  popularity,
-  vote_average,
-  vote_count,
-  overview,
-  poster_path,
-  original_title,
-}) => {
-  const card = document.createElement("div");
-  card.innerHTML = `
-  <dialog class="video-modal2">
-  <form method="dialog">
-    <button class="video-modal-close">X</button>
-  </form>
-  <div class="movie-detail-card">
-    <img src="https://image.tmdb.org/t/p/original${poster_path}" alt="" />
-    <div>
-      <div>
-        <h1>${original_title}</h1>
-      </div>
-      <div class="box">
-        <div>
-          <h2>Vote / Votes</h2>
-          <p>${vote_average} / ${vote_count}</p>
-        </div>
-        <div>
-          <h2>Popularity</h2>
-          <p>${popularity}</p>
-        </div>
-        <div><h2>About</h2></div>
-        <p>${overview}</p>
-      </div>
-    </div>
-  </div>
-</dialog>
-  `;
-  return card;
-};
-
 const createTrailer = ({ key }) => {
   const card = document.createElement("div");
   card.innerHTML = `
 <dialog class="video-modal">
-	<form method="dialog">
-		<button class="video-modal-close">X</button>
-	</form>
-	<iframe src="https://www.youtube.com/embed/${key}">
+  <form method="dialog">
+    <button class="video-modal-close">X</button>
+  </form>
+  <iframe id="trailer-iframe" src="https://www.youtube.com/embed/${key}?enablejsapi=1&autoplay=1"
 </iframe>
 </dialog>
     `;
-
   return card;
 };
 
@@ -108,41 +69,76 @@ const loadMovie = async (index) => {
 
 const loadTrailer = async (id) => {
   const { results } = await getTrailer(id);
-  const trailer = results.map(createTrailer);
   const openModalButton = document.querySelector(".button");
-  if (trailer[0] != undefined) {
-    containerTrailer.replaceChildren(trailer[0]);
-    const modal = document.querySelector(".video-modal");
-    openModalButton.addEventListener("click", function onOpen() {
+
+  if (results.length > 0) {
+    const key = results[0].key;
+    let modal = document.querySelector(".video-modal");
+    let iframe = document.getElementById("trailer-iframe");
+
+    // Eğer modal yoksa ilk kez oluştur
+    if (!modal) {
+      const trailerCard = createTrailer({ key });
+      containerTrailer.replaceChildren(trailerCard);
+      modal = document.querySelector(".video-modal");
+      iframe = document.getElementById("trailer-iframe");
+    }
+
+    const newOpenModalButton = openModalButton.cloneNode(true);
+    openModalButton.replaceWith(newOpenModalButton);
+
+    newOpenModalButton.addEventListener("click", function onOpen() {
+      iframe.src = `https://www.youtube.com/embed/${key}?enablejsapi=1&autoplay=1`;
       modal.showModal();
     });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.close();
+      }
+    });
+
+    modal.addEventListener("close", () => {
+      if (iframe) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        iframe.src = `https://www.youtube.com/embed/${key}?enablejsapi=1`;
+      }
+    });
+
   } else {
-    openModalButton.addEventListener("click", function onOpen() {
+    const newOpenModalButton = openModalButton.cloneNode(true);
+    openModalButton.replaceWith(newOpenModalButton);
+
+    newOpenModalButton.addEventListener("click", function onOpen() {
       var myDialog = document.createElement("dialog");
       myDialog.classList.add("trailer-error");
       containerTrailer.replaceChildren(myDialog);
       myDialog.innerHTML = `
       <form method="dialog">
-		<button class="video-modal-close">X</button>
-	</form>
-  <p>OOPS... We are very sorry! But we couldn’t find the trailer.</p>
-  <img src="../img/IMG_9881 1.png" alt="">
-`;
+        <button class="video-modal-close">X</button>
+      </form>
+      <p>OOPS... We are very sorry! But we couldn’t find the trailer.</p>
+      <img src="../img/IMG_9881 1.png" alt="">
+      `;
       myDialog.showModal();
+      
+      myDialog.addEventListener("click", (event) => {
+        if (event.target === myDialog) {
+          myDialog.close();
+        }
+      });
     });
   }
 };
 
 const loadDetails = async (index) => {
   const { results } = await getMovie();
-  const cards = results.map(createDetail);
-  containerDetail.replaceChildren(cards[index]);
+  const selectedMovie = results[index];
 
   const openModalButton2 = document.querySelector(".button2");
-  const modal = document.querySelector(".video-modal2");
 
-  openModalButton2.addEventListener("click", function onOpen() {
-    modal.showModal();
+  openModalButton2.addEventListener("click", function () {
+    openMovieModal(selectedMovie);
   });
 };
 

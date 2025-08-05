@@ -10,36 +10,36 @@ const teamMembers = [
     name: "Abdullah Furkan Toy",
     role: "FullStack Developer",
     image: "",
-    gitLink: "",
-    linkedLink: "",
+    gitLink: "https://github.com/okazaki55",
+    linkedLink: "https://www.linkedin.com/in/a-furkan-t/",
   },
   {
     name: "Aykut Şahinbaş",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
+    image: "./img/aykut-sahinbas.jpeg",
+    gitLink: "https://github.com/ayktshnbs",
     linkedLink: "",
   },
   {
     name: "Burak Ezer",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
+    image: "./img/burak-ezer.jpeg",
+    gitLink: "https://github.com/burak-ezer",
     linkedLink: "",
   },
   {
     name: "Çağla Karabudak Akın",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
-    linkedLink: "",
+    image: "./img/cagla-karabudak-akin.jpg",
+    gitLink: "https://github.com/caglaakin",
+    linkedLink: "https://www.linkedin.com/in/%C3%A7a%C4%9Fla-karabudak-ak%C4%B1n-b118b118a/",
   },
   {
     name: "Emre Ayvaz",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
-    linkedLink: "",
+    image: "./img/emre-ayvaz.jpeg",
+    gitLink: "https://github.com/Emreayvz",
+    linkedLink: "https://www.linkedin.com/in/emreayvz/",
   },
   {
     name: "Erdem İzcikılınç",
@@ -52,15 +52,15 @@ const teamMembers = [
     name: "İlker Şelimen",
     role: "FullStack Developer",
     image: "",
-    gitLink: "",
-    linkedLink: "",
+    gitLink: "https://github.com/ilkerthedev",
+    linkedLink: "https://www.linkedin.com/in/ilker-%C5%9Felimen-206338266/",
   },
   {
     name: "Mehmet Öndüç",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
-    linkedLink: "",
+    image: "./img/mehmet-onduc.jpeg",
+    gitLink: "https://github.com/Mehmetonduc",
+    linkedLink: "https://www.linkedin.com/in/muhammet-mehmet-%C3%B6nd%C3%BC%C3%A7-b07582210/",
   },
   {
     name: "Özgür Korkmaz",
@@ -72,30 +72,37 @@ const teamMembers = [
   {
     name: "Umay Ece Mantar",
     role: "FullStack Developer",
-    image: "",
-    gitLink: "",
-    linkedLink: "",
+    image: "./img/umay-ece-mantar.jpeg",
+    gitLink: "https://github.com/cicikusdev",
+    linkedLink: "https://www.linkedin.com/in/umayecemantar",
   },
 ];
 
+const userNoImage = "./img/no-user-image.jpeg";
+
+// Tek ve düzgün fonksiyon
 function addTeamMember(team) {
+  // Önce içeriği temizle
   memberCard.innerHTML = "";
 
   team.forEach((member) => {
+    // Her üye için resim kontrolü yap
+    const memberImage = member.image === "" ? userNoImage : member.image;
+
     const teamMember = document.createElement("li");
     teamMember.classList.add("team-member");
     teamMember.innerHTML = `
-      <img class="member-img" src="${member.image}" alt="${member.name}"/>
+      <img class="member-img" src="${memberImage}" alt="${member.name}"/>
       <div class="member-info">
         <p class="member-p">${member.name}</p>
         <p class="member-p2">${member.role}</p>
         <div class="member-link-container">
-          <a class="member-link" href="${member.linkedLink || "#"}">
+          <a class="member-link" href="${member.linkedLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
               <use href="./img/upFooIcons.svg#creators-linkedin"></use>
             </svg>
           </a>
-          <a class="member-link" href="${member.gitLink || "#"}">
+          <a class="member-link" href="${member.gitLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
               <use href="./img/upFooIcons.svg#creators-github"></use>
             </svg>
@@ -104,9 +111,14 @@ function addTeamMember(team) {
       </div>
     `;
 
+    // Sadece teamMember'ı memberCard'a ekle
     memberCard.appendChild(teamMember);
-    teamContainer.appendChild(memberCard);
   });
+  
+  // Döngü bittikten sonra bir kez memberCard'ı teamContainer'a ekle
+  if (memberCard.children.length > 0) {
+    teamContainer.appendChild(memberCard);
+  }
 }
 
 function openModal() {
@@ -122,6 +134,7 @@ function closeModal() {
   }
 }
 
+// Event listener'lar
 if (footerLink) {
   footerLink.addEventListener("click", (event) => {
     event.preventDefault();
