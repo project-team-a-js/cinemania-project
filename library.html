@@ -6,11 +6,10 @@
     <link rel="icon" type="image/svg+xml" href="/cinemania-project/assets/logo-DueiIkke.svg">
     <title>Library</title>
     <script type="module" crossorigin src="/cinemania-project/assets/vendor-CJ4cOYKs.js"></script>
-    <script type="module" crossorigin src="/cinemania-project/assets/styles-CeG0Tjbp.js"></script>
-    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-COHu8mgQ.css">
-    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/library-BsdF4BNm.css">
+    <script type="module" crossorigin src="/cinemania-project/assets/styles-C1KcVMVE.js"></script>
+    <link rel="stylesheet" crossorigin href="/cinemania-project/assets/styles-fE-XIWdB.css">
   </head>
-  <body>
+  <body id="library-page">
     <div class="container">
       <div class="mobile-menu">
   <div class="box">
@@ -43,66 +42,16 @@
 <div class="detail"></div>
 
       <main>
-        <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Library</title>
-</head>
-<body>
-<div class="library">
-  <img class="hero-image" src="/cinemania-project/assets/bg2-Dna89boI.png" alt="Library Hero Image" />
-  <div class="hero-text">
-    <h1 class="hero-title">Create Your <br> Dream Cinema</h1>
-    <p class="hero-desc">
-      This is your guide to designing a personalized movie theater experience<br>
-      with the right equipment, customized decor, and your favorite films.<br>
-      Bring the cinema experience into your own home with cozy seating,<br>
-      dim lighting, and classic movie theater snacks.
-    </p>
+        <section class="my-library">
+  <div class="my-movies-container">
+    <div class="filters">
+      <select name="genre-filter" class="my-movies-select"></select>
+    </div>
+    
+    <ul class="movie-list"></ul>
+    <a class="btn-link"><button class="load-btn">Load More</button></a>
   </div>
-
-  <div class="library-container"></div>
-
-  <section class="filters" id="filters">
-    <select id="genre">
-      <option value="all">Genre</option>
-      <option value="romance">Romance</option>
-      <option value="detective">Detective</option>
-      <option value="thiriller">Thiriller</option>
-      <option value="action">Action</option>
-      <option value="documentary">Documentary</option>
-      <option value="horror">Horror</option>
-    </select>
-  </section>
-
-  <section class="movies" id="movies">
-    <div class="movie-list">
-      <ul class="movie-list-ul" id="movie-list-ul">
-        <!-- Movie items will be dynamically inserted here -->
-      </ul>
-    </div>
-    <div class="button" id="button">
-      <button class="load-more-btn" type="button">
-      Load more
-      </button>
-        <p class="empty-message hidden">
-           OOPS...<br>
-           We are sorry!<br>
-           You don't have any movies at your library.
-        </p>
-      <button class="search-movie-btn hidden" type="button">
-       Search movie
-      </button>
-    </div>
-  </section>
-
-</div>
-</body>
-</html>
-
+</section>
       </main>
       <footer class="footer-container">
   <p class="info-p">&copy; 2025 | All Rights Reserved |</p>
