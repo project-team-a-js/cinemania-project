@@ -5,7 +5,7 @@ const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
 const teamContainer = document.querySelector(".team-modal .team-container");
 const memberCard = document.querySelector(".team-modal .member-card");
 
-const teamMembers = [
+/*const teamMembers = [
   {
     name: "Abdullah Furkan Toy",
     role: "FullStack Developer",
@@ -114,7 +114,7 @@ function addTeamMember(team) {
   if (memberCard.children.length > 0) {
     teamContainer.appendChild(memberCard);
   }
-}
+}*/
 
 function openModal() {
   if (modal) {
