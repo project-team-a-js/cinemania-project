@@ -78,7 +78,7 @@ const teamMembers = [
   },
 ];
 
-const userNoImage = "../img/no-user-image.jpeg";
+const userNoImage = "./img/no-user-image.jpeg";
 
 // Tek ve düzgün fonksiyon
 function addTeamMember(team) {

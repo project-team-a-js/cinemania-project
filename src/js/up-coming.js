@@ -164,9 +164,7 @@ function displayMovie(movie) {
                 <p class="info-p info-about">ABOUT</p>
                 <p class="info-p">${movie.overview}</p>
             </div>
-            <button class="addLibrary" data-id="${
-              movie.id
-            }">Add to My Library</button>
+            <button class="addLibrary" data-id="${movie.id}">Add to My Library</button>
         </div>
     </div>`;
 
