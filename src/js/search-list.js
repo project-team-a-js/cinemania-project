@@ -1,3 +1,5 @@
+import { openMovieModal } from "./modal.js";
+
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 // Ana uygulama fonksiyonu
 function initMovieApp() {
@@ -148,6 +150,15 @@ function initMovieApp() {
           `;
         })
         .join("");
+
+    // Olay dinleyicilerini ekle
+    const movieCards = document.querySelectorAll(".movie-card");
+    movieCards.forEach((card, index) => {
+      card.addEventListener("click", () => {
+        const movie = movies[index];
+        openMovieModal(movie);
+      });
+    });
   }
   function renderPagination() {
     pagination.innerHTML = "";
