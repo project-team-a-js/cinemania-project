@@ -1,5 +1,3 @@
-import { openMovieModal } from "./modal.js";
-
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 
 // Ana uygulama fonksiyonu
@@ -22,14 +20,19 @@ function initMovieApp() {
     !yearSelect
   ) {
     console.error(
-      "Gerekli HTML elementleri bulunamadı! Sayfanızın doğru yüklendiğinden emin olun."
+      "Gerekli HTML elementleri bulunamadı! Şu elementlerin varlığını kontrol edin:"
     );
-    return;
+    console.error("- search-input");
+    console.error("- clear-btn");
+    console.error("- movie-list");
+    console.error("- search-form");
+    console.error("- pagination");
+    console.error("- year-select");
+    return; // Fonksiyon içinde return kullanabiliriz
   }
 
   let totalPages = 24;
   let currentPage = 1;
-  let currentMovies = []; // Global olarak movies'i saklayacağız
 
   // Çarpı butonu göster/gizle
   searchInput.addEventListener("input", () => {
@@ -111,8 +114,6 @@ function initMovieApp() {
   });
 
   function renderMovies(movies) {
-    currentMovies = movies; // Movies'i global olarak sakla
-
     const gradientDefs = `
       <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
         <defs>
@@ -153,7 +154,7 @@ function initMovieApp() {
             .join("");
 
           return `
-            <div class="movie-card" data-movie-id="${movie.id}">
+            <div class="movie-card">
               <img src="${imgSrc}" alt="${title}" />
               <div class="movie-info">
                 <div class="movie-title">${title.toUpperCase()}</div>
@@ -164,23 +165,6 @@ function initMovieApp() {
           `;
         })
         .join("");
-
-    // Film kartlarına click eventi ekle
-    setupMovieCardClickEvents();
-  }
-
-  // Film kartlarına click eventi ekleyen fonksiyon
-  function setupMovieCardClickEvents() {
-    const movieCards = document.querySelectorAll(".movie-card");
-    movieCards.forEach((card, index) => {
-      card.addEventListener("click", () => {
-        // currentMovies array'inden ilgili movie'yi al
-        const movie = currentMovies[index];
-        if (movie) {
-          openMovieModal(movie);
-        }
-      });
-    });
   }
 
   function renderPagination() {
@@ -201,10 +185,37 @@ function initMovieApp() {
     pagination.appendChild(prevBtn);
 
     // Sayfa aralığı ayarı
-    let startPage = currentPage;
-    let endPage = startPage + maxVisiblePages - 1;
+    let startPage;
+    let endPage;
 
-    if (endPage > totalPages) endPage = totalPages;
+    if (currentPage + maxVisiblePages - 1 >= totalPages) {
+      startPage = totalPages - maxVisiblePages + 1;
+      if (startPage < 1) startPage = 1; // Başlangıç sayfasının 1'den küçük olmamasını sağla
+      endPage = totalPages;
+    } else {
+      // Normal durum: mevcut sayfadan ileriye doğru say
+      startPage = currentPage;
+      endPage = startPage + maxVisiblePages - 1;
+    }
+
+    // İlk sayfadan sonraki sayfa sayısı 1'den fazlaysa, ilk sayfa butonunu göster
+    if (startPage > 1) {
+      const firstPageBtn = document.createElement("button");
+      firstPageBtn.textContent = "01";
+      firstPageBtn.classList.add("page-btn");
+      firstPageBtn.onclick = () => {
+        currentPage = 1;
+        fetchAndRenderMovies();
+      };
+      pagination.appendChild(firstPageBtn);
+
+      if (startPage > 2) {
+        const ellipsis = document.createElement("span");
+        ellipsis.textContent = "...";
+        ellipsis.classList.add("ellipsis");
+        pagination.appendChild(ellipsis);
+      }
+    }
 
     for (let i = startPage; i <= endPage; i++) {
       const pageBtn = document.createElement("button");

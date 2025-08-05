@@ -39,7 +39,7 @@
 
 #clear-btn {
   position: absolute;
-  left: 225px;
+  left: 200px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -89,7 +89,7 @@
   height: 50px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -101,7 +101,11 @@
 #search-btn:hover,
 #search-btn:focus,
 #search-btn:active {
-  background: linear-gradient(141.22deg, #F84119 9.4%, rgba(248, 159, 25, 0.68) 91.91%);
+  background: linear-gradient(
+    141.22deg,
+    #f84119 9.4%,
+    rgba(248, 159, 25, 0.68) 91.91%
+  );
 }
 
 /* Film listesi 3 sütun */
@@ -134,7 +138,7 @@
   left: 10px;
   color: #fff;
   z-index: 10;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
   font-weight: bold;
 }
 
@@ -199,22 +203,57 @@
 }
 
 .page-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
-  color: white;
+  background-color: transparent;
+  /* background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%); */
+  color: #b7b7b7;
   font-weight: bold;
   font-size: 14px;
   line-height: 36px;
   text-align: center;
   cursor: pointer;
-  border: none;
+  border: 1px solid #b7b7b7;
+  transition: all 0.3s;
 }
 
 .page-btn:hover {
-  background: linear-gradient(141.22deg, #F84119 9.4%, #FFC226 91.91%);
+  border-color: #fff;
+  /* color: #fff; */
+  /* background: linear-gradient(141.22deg, #f84119 9.4%, #ffc226 91.91%); */
+  /* cursor: pointer; */
+}
+
+.page-btn:active {
+  background: linear-gradient(to bottom right, #ffa726, #f44336);
+  color: white;
+  border: none;
+  /* box-shadow: 0 0 0 2px white;
+  font-weight: bold;
+  background-color: #ffffff; */
+}
+
+.page {
+  background: transparent;
+  color: white;
+  border: 1px solid #888;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.page:hover {
+  background-color: #333;
+}
+
+.page.active {
+  background: linear-gradient(to bottom right, #ffa726, #f44336);
+  color: white;
+  border: none;
 }
 
 .ellipsis {
