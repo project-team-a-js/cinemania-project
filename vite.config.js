@@ -42,9 +42,6 @@ export default defineConfig(({ command }) => {
       },
       outDir: '../dist',
       emptyOutDir: true,
-      // Bu ayar, resimler dahil olmak üzere tüm statik dosyaların
-      // 'dist/assets' klasörüne kopyalanmasını sağlar.
-      assetsDir: 'assets',
     },
     plugins: [
       injectHTML(),

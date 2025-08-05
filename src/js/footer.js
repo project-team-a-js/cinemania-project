@@ -16,28 +16,28 @@ const teamMembers = [
   {
     name: "Aykut Şahinbaş",
     role: "FullStack Developer",
-    image: "./assets/aykut-sahinbas.jpeg",
+    image: "./img/aykut-sahinbas.jpeg",
     gitLink: "https://github.com/ayktshnbs",
     linkedLink: "",
   },
   {
     name: "Burak Ezer",
     role: "FullStack Developer",
-    image: "./assets/burak-ezer.jpeg",
+    image: "./img/burak-ezer.jpeg",
     gitLink: "https://github.com/burak-ezer",
     linkedLink: "",
   },
   {
     name: "Çağla Karabudak Akın",
     role: "FullStack Developer",
-    image: "./assets/cagla-karabudak-akin.jpg",
+    image: "./img/cagla-karabudak-akin.jpg",
     gitLink: "https://github.com/caglaakin",
     linkedLink: "https://www.linkedin.com/in/%C3%A7a%C4%9Fla-karabudak-ak%C4%B1n-b118b118a/",
   },
   {
     name: "Emre Ayvaz",
     role: "FullStack Developer",
-    image: "./assets/emre-ayvaz.jpeg",
+    image: "./img/emre-ayvaz.jpeg",
     gitLink: "https://github.com/Emreayvz",
     linkedLink: "https://www.linkedin.com/in/emreayvz/",
   },
@@ -58,7 +58,7 @@ const teamMembers = [
   {
     name: "Mehmet Öndüç",
     role: "FullStack Developer",
-    image: "./assets/mehmet-onduc.jpeg",
+    image: "./img/mehmet-onduc.jpeg",
     gitLink: "https://github.com/Mehmetonduc",
     linkedLink: "https://www.linkedin.com/in/muhammet-mehmet-%C3%B6nd%C3%BC%C3%A7-b07582210/",
   },
@@ -72,22 +72,18 @@ const teamMembers = [
   {
     name: "Umay Ece Mantar",
     role: "FullStack Developer",
-    image: "./assets/umay-ece-mantar.jpeg",
+    image: "./img/umay-ece-mantar.jpeg",
     gitLink: "https://github.com/cicikusdev",
     linkedLink: "https://www.linkedin.com/in/umayecemantar",
   },
 ];
 
-const userNoImage = "./assets/no-user-image.jpeg";
+const userNoImage = "./img/no-user-image.jpeg";
 
-// Tek ve düzgün fonksiyon
 function addTeamMember(team) {
-  // Önce içeriği temizle
   memberCard.innerHTML = "";
 
   team.forEach((member) => {
-    // Her üye için resim kontrolü yap
-    // Artık 'assets' klasörüne göre doğru yolu kullanıyor
     const memberImage = member.image === "" ? userNoImage : member.image;
 
     const teamMember = document.createElement("li");
@@ -100,23 +96,21 @@ function addTeamMember(team) {
         <div class="member-link-container">
           <a class="member-link" href="${member.linkedLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="#creators-linkedin"></use>
+              <use href="./img/upFooIcons.svg#creators-linkedin"></use>
             </svg>
           </a>
           <a class="member-link" href="${member.gitLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="#creators-github"></use>
+              <use href="./img/upFooIcons.svg#creators-github"></use>
             </svg>
           </a>
         </div>
       </div>
     `;
 
-    // Sadece teamMember'ı memberCard'a ekle
     memberCard.appendChild(teamMember);
   });
   
-  // Döngü bittikten sonra bir kez memberCard'ı teamContainer'a ekle
   if (memberCard.children.length > 0) {
     teamContainer.appendChild(memberCard);
   }
@@ -135,7 +129,6 @@ function closeModal() {
   }
 }
 
-// Event listener'lar
 if (footerLink) {
   footerLink.addEventListener("click", (event) => {
     event.preventDefault();
