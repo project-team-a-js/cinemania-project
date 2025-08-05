@@ -49,7 +49,7 @@
   height: 600px;
   position: relative;
   box-shadow: 0 0 30px 10px rgba(248, 119, 25, 0.4);
-  overflow: hidden;
+  overflow: visible;
   animation: modalSlideIn 0.3s ease-out;
 }
 
@@ -58,6 +58,8 @@
   display: flex;
   height: 100%;
   width: 100%;
+  overflow-y: auto; /* Add scroll to desktop too for testing */
+  max-height: 600px;
 }
 
 /* Left Side - Poster */
@@ -84,6 +86,7 @@
   color: white;
   font-size: 15.5px;
   line-height: 1.45;
+  gap: 15px; /* Add consistent spacing between elements */
 }
 
 /* Movie Title */
@@ -167,9 +170,10 @@
 
 /* About Section */
 .modal-overview {
-  flex: 1;
+  flex: none;
   font-size: 15px;
   line-height: 1.45;
+  margin-bottom: 20px;
 }
 
 .modal-overview h3 {
@@ -192,6 +196,7 @@
 /* Action Button */
 .modal-actions {
   margin-top: 30px;
+  position: relative; /* Ensure it flows with content */
 }
 
 .add-to-library-btn {
@@ -207,6 +212,10 @@
   transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: relative; /* Ensure normal flow */
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 .add-to-library-btn:hover,
 .add-to-library-btn:focus {
@@ -278,20 +287,181 @@
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
+
+/* Global scroll fix for all modal sizes */
+.modal-body {
+  overflow-y: scroll !important;
+  scrollbar-width: auto !important;
+  scrollbar-color: #f87719 #2a2a2a !important;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 15px !important;
+  background: #2a2a2a !important;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #2a2a2a !important;
+  border-radius: 8px !important;
+  border: 1px solid #444 !important;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #f87719 !important;
+  border-radius: 8px !important;
+  border: 2px solid #2a2a2a !important;
+  min-height: 40px !important;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #e66a0c !important;
+}
+
+/* Extra small mobile screens */
+@media screen and (max-width: 480px) {
   .modal-content {
-    width: 95%;
+    width: 98%;
     height: auto;
-    max-height: 90vh;
+    max-height: 95vh;
+    overflow: visible;
+    margin: 2.5vh auto;
+    border-radius: 15px;
   }
 
   .modal-body {
     flex-direction: column;
+    max-height: 95vh;
+    overflow-y: scroll !important;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Custom scrollbar styling for webkit browsers */
+    scrollbar-width: auto;
+    scrollbar-color: #f87719 #2a2a2a;
+    /* Ensure scrollbar is always visible */
+    overflow: auto;
+  }
+
+  /* Webkit scrollbar styling */
+  .modal-body::-webkit-scrollbar {
+    width: 15px;
+    background: #2a2a2a;
+  }
+
+  .modal-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #444;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 8px;
+    border: 2px solid #2a2a2a;
+    min-height: 40px;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
+  }
+
+  .modal-poster-section {
+    width: 100%;
+    height: 250px;
+    flex-shrink: 0;
+  }
+
+  .modal-poster-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .modal-info-section {
+    padding: 20px;
+    flex-shrink: 0;
+    min-height: 400px; /* Force minimum height to trigger scroll */
+  }
+
+  .modal-info-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .modal-overview p {
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-height: 150px; /* Force minimum height for paragraph */
+  }
+
+  /* Make sure the action button flows with content */
+  .modal-actions {
+    margin-top: 30px;
+    padding-top: 15px;
+    position: relative;
+  }
+
+  .close-modal {
+    top: 10px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+  }
+}
+
+/* Small mobile and tablets */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    height: auto;
+    max-height: 90vh;
+    overflow: visible;
+    border-radius: 15px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: scroll !important;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Custom scrollbar styling for webkit browsers */
+    scrollbar-width: auto;
+    scrollbar-color: #f87719 #2a2a2a;
+    /* Ensure scrollbar is always visible */
+    overflow: auto;
+  }
+
+  /* Webkit scrollbar styling */
+  .modal-body::-webkit-scrollbar {
+    width: 15px;
+    background: #2a2a2a;
+  }
+
+  .modal-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #444;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 8px;
+    border: 2px solid #2a2a2a;
+    min-height: 40px;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
   }
 
   .modal-poster-section {
     width: 100%;
     height: 300px;
+    flex-shrink: 0;
   }
 
   .modal-poster-section img {
@@ -300,25 +470,105 @@
 
   .modal-info-section {
     padding: 30px;
+    flex-shrink: 0;
+    min-height: 500px; /* Force minimum height to trigger scroll */
   }
 
   .modal-info-section h2 {
     font-size: 24px;
   }
+
+  /* Ensure the overview section flows naturally */
+  .modal-overview {
+    flex: none;
+    min-height: 200px; /* Force minimum height */
+    margin-bottom: 20px;
+  }
+
+  .modal-overview p {
+    margin-bottom: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-height: 200px; /* Force minimum height for paragraph */
+  }
+
+  /* Make sure the action button flows with content */
+  .modal-actions {
+    margin-top: 30px;
+    padding-top: 20px;
+    position: relative;
+  }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 769px) and (max-width: 1023px) {
   .modal-content {
     width: 650px;
     height: 500px;
+    max-height: 85vh;
+    overflow: visible;
+    border-radius: 15px;
+  }
+
+  .modal-body {
+    overflow-y: scroll !important;
+    /* Custom scrollbar styling for webkit browsers */
+    scrollbar-width: auto;
+    scrollbar-color: #f87719 #2a2a2a;
+    /* Ensure scrollbar is always visible */
+    overflow: auto;
+  }
+
+  /* Webkit scrollbar styling */
+  .modal-body::-webkit-scrollbar {
+    width: 15px;
+    background: #2a2a2a;
+  }
+
+  .modal-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #444;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 8px;
+    border: 2px solid #2a2a2a;
+    min-height: 40px;
+  }
+
+  .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
   }
 
   .modal-poster-section {
     width: 260px;
+    flex-shrink: 0;
   }
 
   .modal-info-section {
     padding: 30px;
+    min-height: 400px; /* Force minimum height to trigger scroll */
+  }
+
+  /* Ensure the overview section flows naturally */
+  .modal-overview {
+    flex: none;
+    min-height: 200px; /* Force minimum height */
+    margin-bottom: 20px;
+  }
+
+  .modal-overview p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-height: 150px; /* Force minimum height for paragraph */
+  }
+
+  /* Make sure the action button flows with content */
+  .modal-actions {
+    margin-top: 30px;
+    padding-top: 15px;
+    position: relative;
   }
 }
 
@@ -326,6 +576,7 @@
   .modal-content {
     width: 750px;
     height: 600px;
+    max-height: 85vh; /* Add max height for desktop too */
   }
 
   .modal-poster-section {
@@ -334,5 +585,27 @@
 
   .modal-info-section {
     padding: 40px;
+    overflow-y: auto; /* Add scroll to desktop info section */
+    max-height: 500px; /* Limit height to trigger scroll */
+  }
+
+  /* Desktop scrollbar */
+  .modal-info-section::-webkit-scrollbar {
+    width: 10px !important;
+    background: #2a2a2a !important;
+  }
+
+  .modal-info-section::-webkit-scrollbar-track {
+    background: #2a2a2a !important;
+    border-radius: 8px !important;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb {
+    background: #f87719 !important;
+    border-radius: 8px !important;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c !important;
   }
 }
