@@ -1,3 +1,5 @@
+import { openMovieModal } from "./modal.js";
+
 const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 
 // Ana uygulama fonksiyonu
@@ -97,37 +99,26 @@ function initMovieApp() {
 
       totalPages = data.total_pages > 24 ? 24 : data.total_pages;
       renderMovies(data.results);
-      renderPagination();
-    } catch (err) {
-      console.error("Film verisi alınamadı:", err);
-      movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Film verisi alınırken hata oluştu.</p>`;
-      totalPages = 1;
-      renderPagination();
     }
+  } catch (err) {
+    console.error("Arama sırasında hata oluştu:", err);
+    movieList.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Arama sırasında hata oluştu.</p>`;
   }
+});
 
-  // Arama formu gönderildiğinde
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    currentPage = 1;
-    fetchAndRenderMovies();
-  });
-
-  function renderMovies(movies) {
-    const gradientDefs = `
-      <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="starGradientFill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#F84119" />
-            <stop offset="100%" stop-color="rgba(248, 159, 25, 0.68)" />
-          </linearGradient>
-          <linearGradient id="starGradientStroke" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#F84119" />
-            <stop offset="100%" stop-color="rgba(248, 159, 25, 0.68)" />
-          </linearGradient>
-        </defs>
-      </svg>
-    `;
+// Film kartlarını render et
+function renderMovies(movies) {
+  // Gradient tanımı: sayfa her renderda eklensin diye movieList'in içine gizli ekliyoruz
+  const gradientDefs = `
+    <svg style="height:0; width:0; position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="starGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F84119" />
+          <stop offset="100%" stop-color="rgba(248, 159, 25, 0.68)" />
+        </linearGradient>
+      </defs>
+    </svg>
+  `;
 
     movieList.innerHTML =
       gradientDefs +
@@ -153,115 +144,16 @@ function initMovieApp() {
             )
             .join("");
 
-          return `
-            <div class="movie-card">
-              <img src="${imgSrc}" alt="${title}" />
-              <div class="movie-info">
-                <div class="movie-title">${title.toUpperCase()}</div>
-                <div class="movie-meta">${year}</div>
-              </div>
-              <div class="rating-stars">${stars}</div>
-            </div>
-          `;
-        })
-        .join("");
-  }
-
-  function renderPagination() {
-    pagination.innerHTML = "";
-
-    const maxVisiblePages = 3;
-
-    const prevBtn = document.createElement("button");
-    prevBtn.textContent = "<";
-    prevBtn.classList.add("arrow-btn");
-    prevBtn.disabled = currentPage === 1;
-    prevBtn.onclick = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        fetchAndRenderMovies();
-      }
-    };
-    pagination.appendChild(prevBtn);
-
-    // Sayfa aralığı ayarı
-    let startPage;
-    let endPage;
-
-    if (currentPage + maxVisiblePages - 1 >= totalPages) {
-      startPage = totalPages - maxVisiblePages + 1;
-      if (startPage < 1) startPage = 1; // Başlangıç sayfasının 1'den küçük olmamasını sağla
-      endPage = totalPages;
-    } else {
-      // Normal durum: mevcut sayfadan ileriye doğru say
-      startPage = currentPage;
-      endPage = startPage + maxVisiblePages - 1;
-    }
-
-    // İlk sayfadan sonraki sayfa sayısı 1'den fazlaysa, ilk sayfa butonunu göster
-    if (startPage > 1) {
-      const firstPageBtn = document.createElement("button");
-      firstPageBtn.textContent = "01";
-      firstPageBtn.classList.add("page-btn");
-      firstPageBtn.onclick = () => {
-        currentPage = 1;
-        fetchAndRenderMovies();
-      };
-      pagination.appendChild(firstPageBtn);
-
-      if (startPage > 2) {
-        const ellipsis = document.createElement("span");
-        ellipsis.textContent = "...";
-        ellipsis.classList.add("ellipsis");
-        pagination.appendChild(ellipsis);
-      }
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      const pageBtn = document.createElement("button");
-      pageBtn.textContent = i.toString().padStart(2, "0");
-      pageBtn.classList.add("page-btn");
-      if (i === currentPage) pageBtn.classList.add("active");
-      pageBtn.onclick = () => {
-        currentPage = i;
-        fetchAndRenderMovies();
-      };
-      pagination.appendChild(pageBtn);
-    }
-
-    if (endPage < totalPages) {
-      const ellipsis = document.createElement("span");
-      ellipsis.textContent = "...";
-      ellipsis.classList.add("ellipsis");
-      pagination.appendChild(ellipsis);
-
-      const lastPageBtn = document.createElement("button");
-      lastPageBtn.textContent = totalPages.toString().padStart(2, "0");
-      lastPageBtn.classList.add("page-btn");
-      lastPageBtn.onclick = () => {
-        currentPage = totalPages;
-        fetchAndRenderMovies();
-      };
-      pagination.appendChild(lastPageBtn);
-    }
-
-    const nextBtn = document.createElement("button");
-    nextBtn.textContent = ">";
-    nextBtn.classList.add("arrow-btn");
-    nextBtn.disabled = currentPage === totalPages;
-    nextBtn.onclick = () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        fetchAndRenderMovies();
-      }
-    };
-    pagination.appendChild(nextBtn);
-  }
-
-  // Başlangıçta listeyi getir
-  fetchAndRenderMovies();
-  renderPagination();
+        return `
+      <div class="movie-card">
+        <img src="${imgSrc}" alt="${title}" />
+        <div class="movie-info">
+          <div class="movie-title">${title.toUpperCase()}</div>
+          <div class="movie-meta">${year}</div>
+        </div>
+        <div class="rating-stars">${stars}</div>
+      </div>
+    `;
+      })
+      .join("");
 }
-
-// Sayfa yüklendiğinde uygulamayı başlat
-document.addEventListener("DOMContentLoaded", initMovieApp);

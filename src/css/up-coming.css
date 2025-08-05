@@ -1,0 +1,258 @@
+.upcoming-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    margin-top: 32px;
+}
+
+.upcoming-h2 {
+    padding-left: 20px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.upcoming-movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movieImage {
+    width: 100%;
+    max-width: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.upcoming-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 22px;
+    padding-right: 18px;
+}
+
+.upcoming-title {
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.upcoming-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.info-tablet-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.upcoming-info-details .info-p{
+    color: var(--grey);
+}
+
+.info-p {
+    margin: 0;
+}
+
+.info-span {
+    display: flex;
+    width: 150px;
+}
+
+.info-color{
+    color: var(--orange);
+}
+
+.info-votes-container{
+    display: flex;
+    flex-direction: row;
+    max-width: 150px;
+    gap: 5px;
+}
+
+.info-votes{
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    margin: 0;
+}
+
+.upcoming-about {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upcoming-about .info-about{
+    color: var(--grey);
+}
+
+.upcoming-about .info-p{
+    font-size: 14px;
+}
+
+.addLibrary {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 12px 24px;
+    display: inline-block;
+    width: fit-content;
+    border-radius: 74px;
+    border: none;
+    color: var(--bg-primary);
+    background-color:var(--orange);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.addLibrary:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--orange);
+    transition: all var(--transition-dur) var(--transition-func);
+}
+
+@media screen and (max-width: 320px) {
+    .movieImage {
+        aspect-ratio: 280 / 402;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .movieImage {
+        aspect-ratio: 280 / 402;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .upcoming-container {
+        width: 100%;
+        max-width: 768px;
+        margin-top: 44px;
+    }
+
+    .upcoming-h2 {
+        padding-left: 34px;
+        font-size: 24px;
+    }
+
+    .movieImage {
+        max-width: 704px;
+        height: 400px;
+        margin: 0;
+        padding-left: 32px;
+    }
+
+    .upcoming-info {
+        padding-left: 32px;
+    }
+
+    .upcoming-title {
+        margin-top: 32px;
+        margin-bottom: 24px;
+        font-size: 28;
+    }
+
+    .upcoming-info-details {
+        flex-direction: row;
+    }
+
+    .info-tablet-details {
+        width: 350px;
+    }
+
+    .info-detail .info-p {
+        width: 150px;
+    }
+
+    .info-votes-container {
+        max-width: 200px;
+    }
+
+    .info-votes{
+        max-width: 25%;
+    }
+
+    .info-span {
+        width: 200px;
+    }
+
+    .addLibrary {
+        margin-top: 20px;
+        margin-bottom: 77px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+
+}
+
+@media screen and (min-width: 1280px) {
+    .upcoming-container {
+        width: 100%;
+        max-width: 1280px;
+        margin-top: 60px;
+    }
+
+    .upcoming-h2 {
+        padding-left: 32px;
+        margin-bottom: 28px;
+        font-size: 28px;
+    }
+
+    .upcoming-movie {
+        align-items: stretch;
+    }
+
+    .upcoming-movie-container {
+        display: flex;
+        gap: 16px;
+    }
+
+    .movieImage {
+        max-width: 805px;
+        aspect-ratio: 16 / 9;
+    }
+
+    .upcoming-info {
+        width: 405px;
+    }
+
+    .upcoming-title {
+        margin-top: 0;
+        margin-bottom: 28px;
+        font-size: 32px;
+    }
+
+    .upcoming-info-details {
+        gap: 12px;
+    }
+
+    .info-tablet-details {
+        gap: 12px;
+    }
+
+    .addLibrary {
+        margin-top: 20px;
+        height: 40px;
+    }
+
+
+}
