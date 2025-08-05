@@ -5,22 +5,15 @@ import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
-  const isDev = command === 'serve';
-
   return {
-    // Geliştirme ortamında base URL '/',
-    // Üretim ortamında GitHub Pages'in repo adı ('/cinemania-project/')
-    base: isDev ? '/' : '/cinemania-project/',
+    base: command === 'serve' ? '/' : '/cinemania-project/',
     
     define: {
-      [isDev ? 'global' : '_global']: {},
+      [command === 'serve' ? 'global' : '_global']: {},
     },
-    
     root: 'src',
-    
     build: {
       sourcemap: true,
-      
       rollupOptions: {
         input: {
           main: './src/index.html',
@@ -47,14 +40,12 @@ export default defineConfig(({ command }) => {
           },
         },
       },
-      
       outDir: '../dist',
       emptyOutDir: true,
-      
-      // Vite'ın tüm statik dosyaların yolunu otomatik olarak 'base' ayarına göre düzeltmesini sağlar.
+      // Bu ayar, resimler dahil olmak üzere tüm statik dosyaların
+      // 'dist/assets' klasörüne kopyalanmasını sağlar.
       assetsDir: 'assets',
     },
-    
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
@@ -71,10 +62,7 @@ export default defineConfig(({ command }) => {
           );
         },
       },
-      // JS dosyalarındaki path'leri düzeltmek için özel olarak yazdığınız plugin'i silebilirsiniz.
-      // Çünkü 'base' ayarı bu işi sizin yerinize yapacaktır.
     ],
-    
     server: {
       port: 3000,
       open: true,

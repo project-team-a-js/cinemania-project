@@ -1,6 +1,3 @@
-const svgPath = new URL('./img/upFooIcons.svg', import.meta.url).href;
-const userNoImage = new URL('./img/no-user-image.jpeg', import.meta.url).href;
-
 const modal = document.querySelector(".team-modal");
 const footerLink = document.querySelector(".footer-link");
 const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
@@ -19,28 +16,28 @@ const teamMembers = [
   {
     name: "Aykut Şahinbaş",
     role: "FullStack Developer",
-    image: "./img/aykut-sahinbas.jpeg",
+    image: "./assets/aykut-sahinbas.jpeg",
     gitLink: "https://github.com/ayktshnbs",
     linkedLink: "",
   },
   {
     name: "Burak Ezer",
     role: "FullStack Developer",
-    image: "./img/burak-ezer.jpeg",
+    image: "./assets/burak-ezer.jpeg",
     gitLink: "https://github.com/burak-ezer",
     linkedLink: "",
   },
   {
     name: "Çağla Karabudak Akın",
     role: "FullStack Developer",
-    image: "./img/cagla-karabudak-akin.jpg",
+    image: "./assets/cagla-karabudak-akin.jpg",
     gitLink: "https://github.com/caglaakin",
     linkedLink: "https://www.linkedin.com/in/%C3%A7a%C4%9Fla-karabudak-ak%C4%B1n-b118b118a/",
   },
   {
     name: "Emre Ayvaz",
     role: "FullStack Developer",
-    image: "./img/emre-ayvaz.jpeg",
+    image: "./assets/emre-ayvaz.jpeg",
     gitLink: "https://github.com/Emreayvz",
     linkedLink: "https://www.linkedin.com/in/emreayvz/",
   },
@@ -61,7 +58,7 @@ const teamMembers = [
   {
     name: "Mehmet Öndüç",
     role: "FullStack Developer",
-    image: "./img/mehmet-onduc.jpeg",
+    image: "./assets/mehmet-onduc.jpeg",
     gitLink: "https://github.com/Mehmetonduc",
     linkedLink: "https://www.linkedin.com/in/muhammet-mehmet-%C3%B6nd%C3%BC%C3%A7-b07582210/",
   },
@@ -75,19 +72,23 @@ const teamMembers = [
   {
     name: "Umay Ece Mantar",
     role: "FullStack Developer",
-    image: "./img/umay-ece-mantar.jpeg",
+    image: "./assets/umay-ece-mantar.jpeg",
     gitLink: "https://github.com/cicikusdev",
     linkedLink: "https://www.linkedin.com/in/umayecemantar",
   },
 ];
 
+const userNoImage = "./assets/no-user-image.jpeg";
+
+// Tek ve düzgün fonksiyon
 function addTeamMember(team) {
+  // Önce içeriği temizle
   memberCard.innerHTML = "";
 
   team.forEach((member) => {
     // Her üye için resim kontrolü yap
-    // image yolu dinamik olarak oluşturuluyor.
-    const memberImage = member.image === "" ? userNoImage : new URL(member.image, import.meta.url).href;
+    // Artık 'assets' klasörüne göre doğru yolu kullanıyor
+    const memberImage = member.image === "" ? userNoImage : member.image;
 
     const teamMember = document.createElement("li");
     teamMember.classList.add("team-member");
@@ -99,12 +100,12 @@ function addTeamMember(team) {
         <div class="member-link-container">
           <a class="member-link" href="${member.linkedLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="${svgPath}#creators-linkedin"></use>
+              <use href="#creators-linkedin"></use>
             </svg>
           </a>
           <a class="member-link" href="${member.gitLink || "#"}" target="_blank">
             <svg class="link-svg" width="30" height="30">
-              <use href="${svgPath}#creators-github"></use>
+              <use href="#creators-github"></use>
             </svg>
           </a>
         </div>
