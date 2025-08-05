@@ -45,8 +45,8 @@
 .modal-content {
   background: #1a1a1a;
   border-radius: 15px;
-  width: 750px;
-  height: 600px;
+  width: 846px;
+  height: 598px;
   position: relative;
   box-shadow: 0 0 30px 10px rgba(248, 119, 25, 0.4);
   overflow: visible;
@@ -58,22 +58,25 @@
   display: flex;
   height: 100%;
   width: 100%;
-  overflow-y: auto; /* Add scroll to desktop too for testing */
-  max-height: 600px;
+  overflow: hidden; /* Remove scroll from modal-body */
 }
 
 /* Left Side - Poster */
 .modal-poster-section {
-  width: 320px;
-  height: 100%;
+  width: 375px;
+  height: 478px;
   flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px 20px 20px;
 }
 
 .modal-poster-section img {
-  width: 100%;
-  height: 100%;
+  width: 375px;
+  height: 478px;
   object-fit: cover;
-  border-radius: 15px 0 0 15px;
+  border-radius: 10px;
 }
 
 /* Right Side - Movie Info */
@@ -87,6 +90,29 @@
   font-size: 15.5px;
   line-height: 1.45;
   gap: 15px; /* Add consistent spacing between elements */
+  overflow-y: auto; /* Keep only one scroll here */
+  scrollbar-width: thin;
+  scrollbar-color: #f87719 #2a2a2a;
+}
+
+/* Scrollbar styling for modal-info-section */
+.modal-info-section::-webkit-scrollbar {
+  width: 8px;
+  background: #2a2a2a;
+}
+
+.modal-info-section::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.modal-info-section::-webkit-scrollbar-thumb {
+  background: #f87719;
+  border-radius: 4px;
+}
+
+.modal-info-section::-webkit-scrollbar-thumb:hover {
+  background: #e66a0c;
 }
 
 /* Movie Title */
@@ -178,19 +204,20 @@
 
 .modal-overview h3 {
   margin: 0 0 10px 0;
-  font-size: 16px;
+  font-size: 16px; /* About yazısı 16px */
   color: #b0b0b0;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: left; /* Sola dayalı */
 }
 
 .modal-overview p {
   margin: 0;
   line-height: 1.6;
   color: white;
-  font-size: 16px;
-  text-align: left;
+  font-size: 14px; /* Açıklama yazısı 14px */
+  text-align: left; /* Sola dayalı */
 }
 
 /* Action Button */
@@ -288,34 +315,7 @@
 
 /* Responsive Design */
 
-/* Global scroll fix for all modal sizes */
-.modal-body {
-  overflow-y: scroll !important;
-  scrollbar-width: auto !important;
-  scrollbar-color: #f87719 #2a2a2a !important;
-}
-
-.modal-body::-webkit-scrollbar {
-  width: 15px !important;
-  background: #2a2a2a !important;
-}
-
-.modal-body::-webkit-scrollbar-track {
-  background: #2a2a2a !important;
-  border-radius: 8px !important;
-  border: 1px solid #444 !important;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-  background: #f87719 !important;
-  border-radius: 8px !important;
-  border: 2px solid #2a2a2a !important;
-  min-height: 40px !important;
-}
-
-.modal-body::-webkit-scrollbar-thumb:hover {
-  background: #e66a0c !important;
-}
+/* Remove duplicate global scroll fix */
 
 /* Extra small mobile screens */
 @media screen and (max-width: 480px) {
@@ -323,64 +323,62 @@
     width: 98%;
     height: auto;
     max-height: 95vh;
-    overflow: visible;
+    overflow: hidden;
     margin: 2.5vh auto;
     border-radius: 15px;
   }
 
   .modal-body {
     flex-direction: column;
+    height: auto;
     max-height: 95vh;
-    overflow-y: scroll !important;
-    /* Smooth scrolling */
-    scroll-behavior: smooth;
-    /* Custom scrollbar styling for webkit browsers */
-    scrollbar-width: auto;
-    scrollbar-color: #f87719 #2a2a2a;
-    /* Ensure scrollbar is always visible */
-    overflow: auto;
-  }
-
-  /* Webkit scrollbar styling */
-  .modal-body::-webkit-scrollbar {
-    width: 15px;
-    background: #2a2a2a;
-  }
-
-  .modal-body::-webkit-scrollbar-track {
-    background: #2a2a2a;
-    border-radius: 8px;
-    border: 1px solid #444;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb {
-    background: #f87719;
-    border-radius: 8px;
-    border: 2px solid #2a2a2a;
-    min-height: 40px;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb:hover {
-    background: #e66a0c;
+    overflow: hidden; /* Remove scroll from modal-body on mobile */
   }
 
   .modal-poster-section {
     width: 100%;
-    height: 250px;
+    height: 280px;
     flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 20px 10px 20px;
   }
 
   .modal-poster-section img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 260px;
     object-fit: cover;
     border-radius: 15px 15px 0 0;
   }
 
   .modal-info-section {
     padding: 20px;
-    flex-shrink: 0;
-    min-height: 400px; /* Force minimum height to trigger scroll */
+    flex: 1;
+    overflow-y: auto; /* Keep scroll only in info section */
+    max-height: calc(95vh - 280px); /* Adjust for poster height */
+    scrollbar-width: thin;
+    scrollbar-color: #f87719 #2a2a2a;
+  }
+
+  /* Mobile scrollbar styling */
+  .modal-info-section::-webkit-scrollbar {
+    width: 6px;
+    background: #2a2a2a;
+  }
+
+  .modal-info-section::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 3px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 3px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
   }
 
   .modal-info-section h2 {
@@ -388,15 +386,19 @@
     margin-bottom: 15px;
   }
 
+  .modal-overview h3 {
+    font-size: 16px; /* About yazısı mobilde de 16px */
+    text-align: left; /* Sola dayalı */
+  }
+
   .modal-overview p {
-    font-size: 14px;
+    font-size: 14px; /* Açıklama yazısı mobilde de 14px */
     line-height: 1.5;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    min-height: 150px; /* Force minimum height for paragraph */
+    text-align: left; /* Sola dayalı */
   }
 
-  /* Make sure the action button flows with content */
   .modal-actions {
     margin-top: 30px;
     padding-top: 15px;
@@ -418,81 +420,85 @@
     width: 95%;
     height: auto;
     max-height: 90vh;
-    overflow: visible;
+    overflow: hidden;
     border-radius: 15px;
   }
 
   .modal-body {
     flex-direction: column;
+    height: auto;
     max-height: 90vh;
-    overflow-y: scroll !important;
-    /* Smooth scrolling */
-    scroll-behavior: smooth;
-    /* Custom scrollbar styling for webkit browsers */
-    scrollbar-width: auto;
-    scrollbar-color: #f87719 #2a2a2a;
-    /* Ensure scrollbar is always visible */
-    overflow: auto;
-  }
-
-  /* Webkit scrollbar styling */
-  .modal-body::-webkit-scrollbar {
-    width: 15px;
-    background: #2a2a2a;
-  }
-
-  .modal-body::-webkit-scrollbar-track {
-    background: #2a2a2a;
-    border-radius: 8px;
-    border: 1px solid #444;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb {
-    background: #f87719;
-    border-radius: 8px;
-    border: 2px solid #2a2a2a;
-    min-height: 40px;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb:hover {
-    background: #e66a0c;
+    overflow: hidden; /* Remove scroll from modal-body */
   }
 
   .modal-poster-section {
     width: 100%;
-    height: 300px;
+    height: 320px;
     flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 20px 10px 20px;
   }
 
   .modal-poster-section img {
+    width: 240px;
+    height: 300px;
+    object-fit: cover;
     border-radius: 15px 15px 0 0;
   }
 
   .modal-info-section {
     padding: 30px;
-    flex-shrink: 0;
-    min-height: 500px; /* Force minimum height to trigger scroll */
+    flex: 1;
+    overflow-y: auto; /* Keep scroll only in info section */
+    max-height: calc(90vh - 320px); /* Adjust for poster height */
+    scrollbar-width: thin;
+    scrollbar-color: #f87719 #2a2a2a;
+  }
+
+  /* Tablet scrollbar styling */
+  .modal-info-section::-webkit-scrollbar {
+    width: 8px;
+    background: #2a2a2a;
+  }
+
+  .modal-info-section::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 4px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
   }
 
   .modal-info-section h2 {
     font-size: 24px;
   }
 
-  /* Ensure the overview section flows naturally */
   .modal-overview {
     flex: none;
-    min-height: 200px; /* Force minimum height */
     margin-bottom: 20px;
+  }
+
+  .modal-overview h3 {
+    font-size: 16px; /* About yazısı tablette de 16px */
+    text-align: left; /* Sola dayalı */
   }
 
   .modal-overview p {
+    font-size: 14px; /* Açıklama yazısı tablette de 14px */
     margin-bottom: 20px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    min-height: 200px; /* Force minimum height for paragraph */
+    text-align: left; /* Sola dayalı */
   }
 
-  /* Make sure the action button flows with content */
   .modal-actions {
     margin-top: 30px;
     padding-top: 20px;
@@ -505,66 +511,74 @@
     width: 650px;
     height: 500px;
     max-height: 85vh;
-    overflow: visible;
+    overflow: hidden;
     border-radius: 15px;
   }
 
   .modal-body {
-    overflow-y: scroll !important;
-    /* Custom scrollbar styling for webkit browsers */
-    scrollbar-width: auto;
-    scrollbar-color: #f87719 #2a2a2a;
-    /* Ensure scrollbar is always visible */
-    overflow: auto;
-  }
-
-  /* Webkit scrollbar styling */
-  .modal-body::-webkit-scrollbar {
-    width: 15px;
-    background: #2a2a2a;
-  }
-
-  .modal-body::-webkit-scrollbar-track {
-    background: #2a2a2a;
-    border-radius: 8px;
-    border: 1px solid #444;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb {
-    background: #f87719;
-    border-radius: 8px;
-    border: 2px solid #2a2a2a;
-    min-height: 40px;
-  }
-
-  .modal-body::-webkit-scrollbar-thumb:hover {
-    background: #e66a0c;
+    overflow: hidden; /* Remove scroll from modal-body */
   }
 
   .modal-poster-section {
     width: 260px;
     flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 25px 15px 15px 15px;
+  }
+
+  .modal-poster-section img {
+    width: 180px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 
   .modal-info-section {
     padding: 30px;
-    min-height: 400px; /* Force minimum height to trigger scroll */
+    overflow-y: auto; /* Keep scroll only in info section */
+    scrollbar-width: thin;
+    scrollbar-color: #f87719 #2a2a2a;
   }
 
-  /* Ensure the overview section flows naturally */
+  /* Desktop tablet scrollbar styling */
+  .modal-info-section::-webkit-scrollbar {
+    width: 8px;
+    background: #2a2a2a;
+  }
+
+  .modal-info-section::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb {
+    background: #f87719;
+    border-radius: 4px;
+  }
+
+  .modal-info-section::-webkit-scrollbar-thumb:hover {
+    background: #e66a0c;
+  }
+
   .modal-overview {
     flex: none;
-    min-height: 200px; /* Force minimum height */
     margin-bottom: 20px;
   }
 
-  .modal-overview p {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    min-height: 150px; /* Force minimum height for paragraph */
+  .modal-overview h3 {
+    font-size: 16px; /* About yazısı 16px */
+    text-align: left; /* Sola dayalı */
   }
 
-  /* Make sure the action button flows with content */
+  .modal-overview p {
+    font-size: 14px; /* Açıklama yazısı 14px */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: left; /* Sola dayalı */
+  }
+
   .modal-actions {
     margin-top: 30px;
     padding-top: 15px;
@@ -574,38 +588,57 @@
 
 @media screen and (min-width: 1024px) {
   .modal-content {
-    width: 750px;
-    height: 600px;
-    max-height: 85vh; /* Add max height for desktop too */
+    width: 846px;
+    height: 598px;
+    max-height: 85vh;
   }
 
   .modal-poster-section {
-    width: 320px;
+    width: 375px;
+    height: 478px;
+    padding: 40px 20px 20px 20px;
+  }
+
+  .modal-poster-section img {
+    width: 375px;
+    height: 478px;
+    border-radius: 10px;
   }
 
   .modal-info-section {
     padding: 40px;
-    overflow-y: auto; /* Add scroll to desktop info section */
-    max-height: 500px; /* Limit height to trigger scroll */
+    overflow-y: auto; /* Keep scroll only in info section for desktop */
+    scrollbar-width: thin;
+    scrollbar-color: #f87719 #2a2a2a;
   }
 
-  /* Desktop scrollbar */
+  /* Desktop scrollbar styling */
   .modal-info-section::-webkit-scrollbar {
-    width: 10px !important;
-    background: #2a2a2a !important;
+    width: 8px;
+    background: #2a2a2a;
   }
 
   .modal-info-section::-webkit-scrollbar-track {
-    background: #2a2a2a !important;
-    border-radius: 8px !important;
+    background: #2a2a2a;
+    border-radius: 4px;
   }
 
   .modal-info-section::-webkit-scrollbar-thumb {
-    background: #f87719 !important;
-    border-radius: 8px !important;
+    background: #f87719;
+    border-radius: 4px;
   }
 
   .modal-info-section::-webkit-scrollbar-thumb:hover {
-    background: #e66a0c !important;
+    background: #e66a0c;
+  }
+
+  .modal-overview h3 {
+    font-size: 16px; /* About yazısı masaüstünde de 16px */
+    text-align: left; /* Sola dayalı */
+  }
+
+  .modal-overview p {
+    font-size: 14px; /* Açıklama yazısı masaüstünde de 14px */
+    text-align: left; /* Sola dayalı */
   }
 }
