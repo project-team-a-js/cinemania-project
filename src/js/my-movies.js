@@ -1,8 +1,8 @@
 import axios from "axios";
 import { openMovieModal } from "./modal.js";
-const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
-const BASE_URL = "https://api.themoviedb.org";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
+import { API_KEY } from './config.js';
+import { BASE_URL } from './config.js';
+import { IMAGE_BASE_URL } from './config.js';
 const selectElement = document.querySelector(".my-movies-select");
 const loadBtn = document.querySelector(".load-btn");
 const movieList = document.querySelector(".movie-list");

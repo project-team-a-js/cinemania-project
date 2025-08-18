@@ -1,0 +1,8 @@
+/* Non-critical CSS */
+@import url(./modal.css);
+@import url(./footer.css);
+@import url(./my-movies.css);
+@import url(./scroll-up.css);
+@import url(./search-list.css);
+@import url(./up-coming.css);
+@import url(./weekly-trends.css);

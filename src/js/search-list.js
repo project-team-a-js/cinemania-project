@@ -1,6 +1,6 @@
 import { openMovieModal } from "./modal.js";
+import { API_KEY } from './config.js';
 
-const API_KEY = "bca6557ef64423ebe36f13a6f80e4fa5";
 // Ana uygulama fonksiyonu
 function initMovieApp() {
   // Elementleri güvenli şekilde seç
