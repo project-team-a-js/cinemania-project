@@ -5,9 +5,31 @@ const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
 const teamContainer = document.querySelector(".team-modal .team-container");
 const memberCard = document.querySelector(".team-modal .member-card");
 
+let imagesLoaded = false;
+
+function loadImages() {
+  if (imagesLoaded) return;
+  
+  const images = document.querySelectorAll('img[data-src]');
+  
+  images.forEach(img => {
+    const src = img.getAttribute('data-src');
+    if (src) {
+      img.src = src;
+      img.removeAttribute('data-src');
+    }
+  });
+  
+  imagesLoaded = true;
+}
+
 function openModal() {
   if (modal) {
     modal.style.display = "flex";
+    // Modal açıldığında resimleri yükle
+    if (!imagesLoaded) {
+      setTimeout(loadImages, 100);
+    }
   }
 }
 
