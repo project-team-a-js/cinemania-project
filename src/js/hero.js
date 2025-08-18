@@ -2,16 +2,14 @@ import { openMovieModal } from "./modal.js";
 import { API_KEY } from './config.js';
 import { BASE_URL } from './config.js';
 
-BASE_URL = BASE_URL + "/3"
-
 const getMovie = async () => {
-  const url = `${BASE_URL}trending/all/day?api_key=${API_KEY}`;
+  const url = `${BASE_URL}/3/trending/all/day?api_key=${API_KEY}`;
   const response = await fetch(url);
   return response.json();
 };
 
 const getTrailer = async (id) => {
-  const url = `${BASE_URL}movie/${id}/videos?api_key=${API_KEY}`;
+  const url = `${BASE_URL}/3/movie/${id}/videos?api_key=${API_KEY}`;
   const response = await fetch(url);
   return response.json();
 };
