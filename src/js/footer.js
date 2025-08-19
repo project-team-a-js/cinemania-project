@@ -2,21 +2,33 @@ const modal = document.querySelector(".team-modal");
 const footerLink = document.querySelector(".footer-link");
 const footerCloseBtn = document.querySelector(".team-modal .modal-close-btn");
 
-const teamContainer = document.querySelector(".team-modal .team-container");
-const memberCard = document.querySelector(".team-modal .member-card");
-
 let imagesLoaded = false;
 
 function loadImages() {
   if (imagesLoaded) return;
   
-  const images = document.querySelectorAll('img[data-src]');
+  const placeholders = document.querySelectorAll('.image-placeholder[data-src]');
   
-  images.forEach(img => {
-    const src = img.getAttribute('data-src');
-    if (src) {
-      img.src = src;
-      img.removeAttribute('data-src');
+  placeholders.forEach(placeholder => {
+    const imgSrc = placeholder.getAttribute('data-src');
+    const img = placeholder.querySelector('.member-img');
+    
+    if (imgSrc && img) {
+      const tempImg = new Image();
+      
+      tempImg.onload = function() {
+        img.src = this.src;
+        img.classList.add('loaded');
+        placeholder.removeAttribute('data-src');
+      };
+      
+      tempImg.onerror = function() {
+        // Resim yüklenemezse placeholder kalır
+        console.warn('Image failed to load:', imgSrc);
+        placeholder.removeAttribute('data-src');
+      };
+      
+      tempImg.src = imgSrc;
     }
   });
   
@@ -27,9 +39,7 @@ function openModal() {
   if (modal) {
     modal.style.display = "flex";
     // Modal açıldığında resimleri yükle
-    if (!imagesLoaded) {
-      setTimeout(loadImages, 100);
-    }
+    setTimeout(loadImages, 100);
   }
 }
 
@@ -39,6 +49,7 @@ function closeModal() {
   }
 }
 
+// Event listeners
 if (footerLink) {
   footerLink.addEventListener("click", (event) => {
     event.preventDefault();
