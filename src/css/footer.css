@@ -103,8 +103,8 @@
   flex-wrap: wrap;
   width: 100%;
   gap: 12px;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .team-member {
